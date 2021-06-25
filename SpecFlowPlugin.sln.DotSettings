@@ -512,14 +512,9 @@
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Categories/=Imported_002021_002E01_002E2019/@EntryIndexedValue">Imported 21.01.2019</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Shortcut/@EntryValue">fhdr</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Description/@EntryValue">Roche FileHeader</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Text/@EntryValue">// &lt;copyright file="$file$" company="Selectron Systems AG"&gt;&#xD;
-// Copyright (c) Selectron Systems AG. All rights reserved.&#xD;
-// &lt;/copyright&gt;&#xD;
-</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Reformat/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Categories/=Imported_002012_002E09_002E2013/@EntryIndexedValue">Imported 12.09.2013</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Categories/=Selectron/@EntryIndexedValue">Selectron</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=F699F66EAAC70F47A14A8D98ED3F1D76/Scope/=139FF4CE89E7094686FDA7BF5FFBBE92/Type/@EntryValue">Everywhere</s:String>
@@ -529,52 +524,7 @@
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Shortcut/@EntryValue">nunit_fixture</s:String>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Description/@EntryValue">NUnit Testfixture template</s:String>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Text/@EntryValue">// &lt;copyright file="$CLASS$.cs" company="Selectron Systems AG"&gt;&#xD;
-// Copyright (c) Selectron Systems AG. All rights reserved.&#xD;
-// &lt;/copyright&gt;&#xD;
-&#xD;
-// ReSharper disable InconsistentNaming&#xD;
-namespace $NAMESPACE$&#xD;
-{&#xD;
-    using Moq;&#xD;
-    using NUnit.Framework;&#xD;
-&#xD;
-    /// &lt;summary&gt;&#xD;
-    /// Implements the test fixture of &lt;see cref="$TESTEE$"/&gt;&#xD;
-    /// &lt;/summary&gt;&#xD;
-    [TestFixture]&#xD;
-    public class $CLASS$&#xD;
-    {&#xD;
-        private I$TESTEE$ testee;&#xD;
-&#xD;
-        private Mock&lt;$INTERFACE$&gt; $MOCK$;&#xD;
-&#xD;
-        [SetUp]&#xD;
-        public void SetUp()&#xD;
-        {&#xD;
-            this.$MOCK$ = new Mock&lt;$INTERFACE$&gt;(MockBehavior.Strict);&#xD;
-            this.testee = new $TESTEE$();&#xD;
-        }&#xD;
-&#xD;
-        [TearDown]&#xD;
-        public void TearDown()&#xD;
-        {&#xD;
-            this.$MOCK$.VerifyAll();&#xD;
-        }&#xD;
-&#xD;
-        [Test]&#xD;
-        public void When_DoSomething_ItShould_ResultSomething()&#xD;
-        {&#xD;
-            // Arrange&#xD;
-&#xD;
-            // Act&#xD;
-&#xD;
-            // Assert&#xD;
-        }&#xD;
-    }&#xD;
-}</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/ShortenQualifiedReferences/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Categories/=Selectron/@EntryIndexedValue">Selectron</s:String>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Applicability/=Live/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Scope/=C3001E7C0DA78E4487072B7E050D86C5/@KeyIndexDefined">True</s:Boolean>
 	<s:String x:Key="/Default/PatternsAndTemplates/LiveTemplates/Template/=E55EF3FA628F8A4FB72D52BD8E3A8D7F/Scope/=C3001E7C0DA78E4487072B7E050D86C5/Type/@EntryValue">InCSharpFile</s:String>
@@ -647,7 +597,6 @@ namespace $NAMESPACE$&#xD;
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=modbus/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=navi/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=safetycom/@EntryIndexedValue">True</s:Boolean>
-	<s:Boolean x:Key="/Default/UserDictionary/Words/=Selectron/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Splitted/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=testee/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Uncopyable/@EntryIndexedValue">True</s:Boolean>
