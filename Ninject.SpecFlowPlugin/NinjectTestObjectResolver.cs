@@ -1,18 +1,13 @@
 ﻿namespace Ninject.SpecFlowPlugin
 {
     using System;
-    using BoDi;
-    using TechTalk.SpecFlow.Infrastructure;
+    using SpecFlowPluginBase;
 
-    public class NinjectTestObjectResolver : ITestObjectResolver
+    public class NinjectTestObjectResolver : TestObjectResolver<IKernel>
     {
-        public object ResolveBindingInstance(Type bindingType, IObjectContainer container)
+        protected override object ResolveFromUserContainer(IKernel userContainer, Type bindingType)
         {
-            container.CheckNullArgument(nameof(container));
-            bindingType.CheckNullArgument(nameof(bindingType));
-
-            var kernel = container.Resolve<IKernel>();
-            return kernel.Get(bindingType);
+            return userContainer.Get(bindingType);
         }
     }
 }

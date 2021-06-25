@@ -2,7 +2,7 @@
 {
     using System.Diagnostics.CodeAnalysis;
     using Ninject;
-    using Ninject.SpecFlowPlugin.Attributes;
+    using SpecFlowPluginBase.Attributes;
 
     internal class DependenciesConfigurator
     {

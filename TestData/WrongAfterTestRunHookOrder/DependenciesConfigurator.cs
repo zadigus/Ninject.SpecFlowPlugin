@@ -1,12 +1,16 @@
 ﻿namespace WrongAfterTestRunHookOrder
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using Ninject;
-    using Ninject.SpecFlowPlugin.Attributes;
-    using Ninject.SpecFlowPlugin.Extensions;
+    using SpecFlowPluginBase;
+    using SpecFlowPluginBase.Attributes;
 
     internal class DependenciesConfigurator
     {
+        private static readonly Action<Type, IKernel> BindTypeInSingletonScope =
+            (type, kernel) => kernel.Bind(type).ToSelf().InSingletonScope();
+
         [SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode",
@@ -14,7 +18,7 @@
         [ScenarioDependencies]
         public static void SetupScenarioContainer(IKernel kernel)
         {
-            kernel.RegisterBindings<DependenciesConfigurator>();
+            BindingRegister.RegisterBindings<DependenciesConfigurator>(type => BindTypeInSingletonScope(type, kernel));
         }
 
         [SuppressMessage(
@@ -24,7 +28,7 @@
         [FeatureDependencies]
         public static void SetupFeatureContainer(IKernel kernel)
         {
-            kernel.RegisterBindings<DependenciesConfigurator>();
+            BindingRegister.RegisterBindings<DependenciesConfigurator>(type => BindTypeInSingletonScope(type, kernel));
         }
 
         [SuppressMessage(
@@ -34,7 +38,7 @@
         [TestThreadDependencies]
         public static void SetupTestThreadContainer(IKernel kernel)
         {
-            kernel.RegisterBindings<DependenciesConfigurator>();
+            BindingRegister.RegisterBindings<DependenciesConfigurator>(type => BindTypeInSingletonScope(type, kernel));
         }
     }
 }

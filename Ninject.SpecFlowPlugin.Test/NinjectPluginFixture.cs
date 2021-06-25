@@ -10,12 +10,12 @@
     using BoDi;
     using FluentAssertions;
     using Moq;
-    using Ninject.SpecFlowPlugin.Attributes;
-    using Ninject.SpecFlowPlugin.ContainerLookup;
-    using Ninject.SpecFlowPlugin.Exceptions;
     using Ninject.SpecFlowPlugin.Test.TestObjects;
     using NoDependenciesAttribute.Hooks;
     using NUnit.Framework;
+    using SpecFlowPluginBase.Attributes;
+    using SpecFlowPluginBase.ContainerLookup;
+    using SpecFlowPluginBase.Exceptions;
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Bindings;
     using TechTalk.SpecFlow.Bindings.Reflection;
@@ -704,8 +704,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -714,9 +714,9 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.ScenarioDependenciesNotFound);
+                    .Be(SpecFlowPluginError.ScenarioDependenciesNotFound);
             }
         }
 
@@ -725,8 +725,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -742,8 +742,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -769,8 +769,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -779,9 +779,9 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.WrongDependenciesSetupMethodSignature);
+                    .Be(SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
             }
         }
 
@@ -800,8 +800,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -810,9 +810,9 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.WrongDependenciesSetupMethodSignature);
+                    .Be(SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
             }
         }
 
@@ -831,8 +831,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -841,9 +841,9 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.WrongDependenciesSetupMethodSignature);
+                    .Be(SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
             }
         }
 
@@ -853,8 +853,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterScenarioHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -864,9 +864,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -876,8 +876,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterScenarioHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -887,9 +887,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -899,8 +899,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterScenarioHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -910,9 +910,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -922,8 +922,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterFeatureHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -933,9 +933,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -945,8 +945,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterFeatureHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -956,9 +956,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -968,8 +968,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterFeatureHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -979,9 +979,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -991,8 +991,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterTestRunHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -1002,9 +1002,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -1014,8 +1014,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterTestRunHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -1025,9 +1025,9 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
@@ -1037,8 +1037,8 @@
             // Arrange
             var bindingClassType = typeof(TooHighOrderAfterTestRunHooks);
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder, FeatureContainerFinder,
-                TestThreadContainerFinder>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
+                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -1048,27 +1048,28 @@
                 act.Should()
                     .Throw<TargetInvocationException>()
                     .WithInnerException<TargetInvocationException>()
-                    .WithInnerException<NinjectPluginException>()
+                    .WithInnerException<SpecFlowPluginException>()
                     .And.Error.Should()
-                    .Be(NinjectPluginError.IncompatibleHookFound);
+                    .Be(SpecFlowPluginError.IncompatibleHookFound);
             }
         }
 
         private void AssociateRuntimeEventsWithPlugin<TScenarioContainerFinder, TFeatureContainerFinder,
             TTestThreadContainerFinder>(RuntimePluginEvents events)
-            where TScenarioContainerFinder : ContainerFinder<ScenarioDependenciesAttribute>
-            where TFeatureContainerFinder : ContainerFinder<FeatureDependenciesAttribute>
-            where TTestThreadContainerFinder : ContainerFinder<TestThreadDependenciesAttribute>
+            where TScenarioContainerFinder : ContainerFinder<ScenarioDependenciesAttribute, IKernel>
+            where TFeatureContainerFinder : ContainerFinder<FeatureDependenciesAttribute, IKernel>
+            where TTestThreadContainerFinder : ContainerFinder<TestThreadDependenciesAttribute, IKernel>
         {
             var plugin = new NinjectPlugin();
 
             this.globalContainer.RegisterTypeAs<NinjectTestObjectResolver, ITestObjectResolver>();
             this.globalContainer
-                .RegisterTypeAs<TScenarioContainerFinder, ContainerFinder<ScenarioDependenciesAttribute>>();
+                .RegisterTypeAs<TScenarioContainerFinder, ContainerFinder<ScenarioDependenciesAttribute, IKernel>>();
             this.globalContainer
-                .RegisterTypeAs<TFeatureContainerFinder, ContainerFinder<FeatureDependenciesAttribute>>();
+                .RegisterTypeAs<TFeatureContainerFinder, ContainerFinder<FeatureDependenciesAttribute, IKernel>>();
             this.globalContainer
-                .RegisterTypeAs<TTestThreadContainerFinder, ContainerFinder<TestThreadDependenciesAttribute>>();
+                .RegisterTypeAs<TTestThreadContainerFinder,
+                    ContainerFinder<TestThreadDependenciesAttribute, IKernel>>();
 
             plugin.Initialize(events, Mock.Of<RuntimePluginParameters>(), Mock.Of<UnitTestProviderConfiguration>());
             events.RaiseCustomizeGlobalDependencies(this.globalContainer, this.specFlowConfiguration);

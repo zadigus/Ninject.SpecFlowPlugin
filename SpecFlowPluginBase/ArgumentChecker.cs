@@ -4,7 +4,7 @@
     using System.Diagnostics;
 
     [DebuggerStepThrough]
-    internal static class ArgumentChecker
+    public static class ArgumentChecker
     {
         public static void CheckNullArgument(this object argument, string argumentName)
         {

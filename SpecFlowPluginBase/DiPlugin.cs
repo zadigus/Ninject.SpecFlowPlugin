@@ -9,8 +9,9 @@
     using TechTalk.SpecFlow.Plugins;
     using TechTalk.SpecFlow.UnitTestProvider;
 
-    public abstract class DiPlugin<TContainerType> : IRuntimePlugin
+    public abstract class DiPlugin<TContainerType, TTestObjectResolver> : IRuntimePlugin
         where TContainerType : class
+        where TTestObjectResolver : TestObjectResolver<TContainerType>
     {
         private readonly object registrationLock = new object();
 
@@ -51,7 +52,7 @@
                             .IsRegistered<ContainerFinder<ScenarioDependenciesAttribute, TContainerType>>())
                         {
                             args.ObjectContainer
-                                .RegisterTypeAs<TestObjectResolver<TContainerType>, ITestObjectResolver>();
+                                .RegisterTypeAs<TTestObjectResolver, ITestObjectResolver>();
                             args.ObjectContainer
                                 .RegisterTypeAs<TestThreadContainerFinder<TContainerType>,
                                     ContainerFinder<TestThreadDependenciesAttribute, TContainerType>>();
@@ -120,10 +121,10 @@
             };
         }
 
-        protected abstract TContainerType CreateScenarioContainer(IObjectContainer objectContainer);
+        protected abstract TContainerType CreateScenarioContainer(ObjectContainer objectContainer);
 
-        protected abstract TContainerType CreateFeatureContainer(IObjectContainer objectContainer);
+        protected abstract TContainerType CreateFeatureContainer(ObjectContainer objectContainer);
 
-        protected abstract TContainerType CreateTestThreadContainer(IObjectContainer objectContainer);
+        protected abstract TContainerType CreateTestThreadContainer(ObjectContainer objectContainer);
     }
 }

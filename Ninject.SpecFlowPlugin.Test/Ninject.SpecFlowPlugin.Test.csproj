@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ninject.SpecFlowPlugin\Ninject.SpecFlowPlugin.csproj" />
+    <ProjectReference Include="..\SpecFlowPluginBase\SpecFlowPluginBase.csproj" />
     <ProjectReference Include="..\TestData\NoDependenciesAttribute\NoDependenciesAttribute.csproj" />
     <ProjectReference Include="..\TestData\WrongAfterFeatureHookOrder\WrongAfterFeatureHookOrder.csproj" />
     <ProjectReference Include="..\TestData\WrongAfterScenarioHookOrder\WrongAfterScenarioHookOrder.csproj" />

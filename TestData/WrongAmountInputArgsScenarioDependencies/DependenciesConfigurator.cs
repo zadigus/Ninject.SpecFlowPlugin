@@ -1,7 +1,7 @@
 ﻿namespace WrongAmountInputArgsScenarioDependencies
 {
     using System.Diagnostics.CodeAnalysis;
-    using Ninject.SpecFlowPlugin.Attributes;
+    using SpecFlowPluginBase.Attributes;
 
     internal class DependenciesConfigurator
     {

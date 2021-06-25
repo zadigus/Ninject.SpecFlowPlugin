@@ -1,5 +1,7 @@
 ﻿namespace Ninject.SpecFlowPlugin.Hooks
 {
+    using System;
+    using SpecFlowPluginBase;
     using TechTalk.SpecFlow;
 
     [Binding]
@@ -15,10 +17,13 @@
         // we need to ensure that this is called as late as possible
         // because it can well be that AfterFeature hooks use
         // objects from the kernel
-        [AfterFeature(Order = Constants.KernelDisposerOrder)]
+        [AfterFeature(Order = Constants.ContainerDisposerHookOrder)]
         public static void CleanupFeatureDisposables(IKernel featureKernel)
         {
-            featureKernel.CheckNullArgument(nameof(featureKernel));
+            if (featureKernel == null)
+            {
+                throw new ArgumentNullException(nameof(featureKernel));
+            }
 
             featureKernel.Dispose();
         }
@@ -26,10 +31,13 @@
         // we need to ensure that this is called as late as possible
         // because it can well be that AfterTestRun hooks use
         // objects from the kernel
-        [AfterTestRun(Order = Constants.KernelDisposerOrder)]
+        [AfterTestRun(Order = Constants.ContainerDisposerHookOrder)]
         public static void CleanupTestThreadDisposables(IKernel testThreadKernel)
         {
-            testThreadKernel.CheckNullArgument(nameof(testThreadKernel));
+            if (testThreadKernel == null)
+            {
+                throw new ArgumentNullException(nameof(testThreadKernel));
+            }
 
             testThreadKernel.Dispose();
         }
@@ -37,7 +45,7 @@
         // we need to ensure that this is called as late as possible
         // because it can well be that AfterScenario hooks use
         // objects from the kernel
-        [AfterScenario(Order = Constants.KernelDisposerOrder)]
+        [AfterScenario(Order = Constants.ContainerDisposerHookOrder)]
         public void CleanupScenarioDisposables()
         {
             this.scenarioKernel.Dispose();

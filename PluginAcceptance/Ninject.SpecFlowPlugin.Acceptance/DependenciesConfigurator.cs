@@ -1,12 +1,16 @@
 ﻿namespace Ninject.SpecFlowPlugin.Acceptance
 {
+    using System;
     using System.Diagnostics.CodeAnalysis;
     using global::SpecFlowPlugin.Acceptance.Common.TestClasses;
-    using Ninject.SpecFlowPlugin.Attributes;
-    using Ninject.SpecFlowPlugin.Extensions;
+    using SpecFlowPluginBase;
+    using SpecFlowPluginBase.Attributes;
 
     internal class DependenciesConfigurator
     {
+        private static readonly Action<Type, IKernel> BindTypeInSingletonScope =
+            (type, kernel) => kernel.Bind(type).ToSelf().InSingletonScope();
+
         [SuppressMessage(
             "Microsoft.Performance",
             "CA1811:AvoidUncalledPrivateCode",
@@ -15,10 +19,11 @@
         public static void SetupScenarioContainer(IKernel kernel)
         {
             // register bindings from Acceptance project
-            kernel.RegisterBindings<DependenciesConfigurator>();
+            BindingRegister.RegisterBindings<DependenciesConfigurator>(type => BindTypeInSingletonScope(type, kernel));
 
             // register bindings from Acceptance.Common project
-            kernel.RegisterBindings<TransientScenarioDependency>();
+            BindingRegister.RegisterBindings<TransientScenarioDependency>(
+                type => BindTypeInSingletonScope(type, kernel));
 
             // we only test the disposal of objects in singleton scope because
             // that's the only case handled by BoDi; singletons are disposed,
@@ -39,10 +44,11 @@
         public static void SetupFeatureContainer(IKernel kernel)
         {
             // register bindings from Acceptance project
-            kernel.RegisterBindings<DependenciesConfigurator>();
+            BindingRegister.RegisterBindings<DependenciesConfigurator>(type => BindTypeInSingletonScope(type, kernel));
 
             // register bindings from Acceptance.Common project
-            kernel.RegisterBindings<TransientFeatureDependency>();
+            BindingRegister.RegisterBindings<TransientScenarioDependency>(
+                type => BindTypeInSingletonScope(type, kernel));
 
             // we only test the disposal of objects in singleton scope because
             // that's the only case handled by BoDi; singletons are disposed,
