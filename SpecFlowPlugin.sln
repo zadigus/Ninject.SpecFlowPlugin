@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrongReturnTypeTestThreadDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WrongAfterTestRunHookOrder", "TestData\WrongAfterTestRunHookOrder\WrongAfterTestRunHookOrder.csproj", "{10C9BADD-CEB5-4836-9A14-5C8CE7A6DF73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowPluginBase", "SpecFlowPluginBase\SpecFlowPluginBase.csproj", "{62BE79BE-6FFD-4296-B3DA-272317FB549E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{FCD06703-2276-4542-A768-A9688ECA65F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCD06703-2276-4542-A768-A9688ECA65F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCD06703-2276-4542-A768-A9688ECA65F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62BE79BE-6FFD-4296-B3DA-272317FB549E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62BE79BE-6FFD-4296-B3DA-272317FB549E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62BE79BE-6FFD-4296-B3DA-272317FB549E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62BE79BE-6FFD-4296-B3DA-272317FB549E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
