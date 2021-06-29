@@ -5,122 +5,54 @@ using TechTalk.SpecFlow.Plugins;
 
 namespace Ninject.SpecFlowPlugin
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.Reflection;
+    using System;
     using BoDi;
-    using Ninject.SpecFlowPlugin.Attributes;
-    using Ninject.SpecFlowPlugin.ContainerLookup;
     using Ninject.SpecFlowPlugin.TestContainers;
-    using Ninject.Syntax;
+    using SpecFlowPluginBase;
     using TechTalk.SpecFlow;
-    using TechTalk.SpecFlow.Infrastructure;
-    using TechTalk.SpecFlow.Plugins;
-    using TechTalk.SpecFlow.UnitTestProvider;
 
-    public class NinjectPlugin : IRuntimePlugin
+    public class NinjectPlugin : DiPlugin<IKernel, NinjectTestObjectResolver>
     {
-        private static readonly object RegistrationLock = new object();
-
-        [SuppressMessage(
-            "Microsoft.Maintainability",
-            "CA1506:AvoidExcessiveClassCoupling",
-            Justification = "we need it like this")]
-        [SuppressMessage(
-            "Microsoft.Reliability",
-            "CA2000:Dispose objects before losing scope",
-            Justification = "the kernel is disposed after feature")]
-        public void Initialize(
-            RuntimePluginEvents runtimePluginEvents,
-            RuntimePluginParameters runtimePluginParameters,
-            UnitTestProviderConfiguration unitTestProviderConfiguration)
+        protected override IKernel CreateScenarioContainer(ObjectContainer objectContainer)
         {
-            unitTestProviderConfiguration.CheckNullArgument(nameof(unitTestProviderConfiguration));
-            runtimePluginParameters.CheckNullArgument(nameof(runtimePluginParameters));
-            runtimePluginEvents.CheckNullArgument(nameof(runtimePluginEvents));
-
-            runtimePluginEvents.ConfigurationDefaults += (sender, args) =>
+            if (objectContainer == null)
             {
-                var pluginAssemblyName = Assembly.GetExecutingAssembly().GetName();
-                args.SpecFlowConfiguration.AdditionalStepAssemblies.Add(pluginAssemblyName.Name);
-            };
+                throw new ArgumentNullException(nameof(objectContainer));
+            }
 
-            runtimePluginEvents.CustomizeGlobalDependencies += (sender, args) =>
+            var kernel = CreateAcceptanceTestKernel(objectContainer);
+            kernel.Bind<IObjectContainer>().ToConstant(objectContainer);
+            kernel.Bind<ScenarioContext>().ToMethod(ctx => objectContainer.Resolve<ScenarioContext>());
+
+            return kernel;
+        }
+
+        protected override IKernel CreateFeatureContainer(ObjectContainer objectContainer)
+        {
+            if (objectContainer == null)
             {
-                // temporary fix for CustomizeGlobalDependencies called multiple times
-                // see https://github.com/techtalk/SpecFlow/issues/948
-                if (!args.ObjectContainer.IsRegistered<ContainerFinder<ScenarioDependenciesAttribute>>())
-                {
-                    // an extra lock to ensure that there are not two super fast threads re-registering the same stuff
-                    lock (RegistrationLock)
-                    {
-                        if (!args.ObjectContainer.IsRegistered<ContainerFinder<ScenarioDependenciesAttribute>>())
-                        {
-                            args.ObjectContainer.RegisterTypeAs<NinjectTestObjectResolver, ITestObjectResolver>();
-                            args.ObjectContainer
-                                .RegisterTypeAs<TestThreadContainerFinder,
-                                    ContainerFinder<TestThreadDependenciesAttribute>>();
-                            args.ObjectContainer
-                                .RegisterTypeAs<FeatureContainerFinder,
-                                    ContainerFinder<FeatureDependenciesAttribute>>();
-                            args.ObjectContainer
-                                .RegisterTypeAs<ScenarioContainerFinder,
-                                    ContainerFinder<ScenarioDependenciesAttribute>>();
-                        }
-                    }
+                throw new ArgumentNullException(nameof(objectContainer));
+            }
 
-                    // workaround for parallel execution issue - this should be rather a feature in BoDi?
-                    args.ObjectContainer.Resolve<ContainerFinder<TestThreadDependenciesAttribute>>();
-                    args.ObjectContainer.Resolve<ContainerFinder<FeatureDependenciesAttribute>>();
-                    args.ObjectContainer.Resolve<ContainerFinder<ScenarioDependenciesAttribute>>();
-                }
-            };
+            var kernel = CreateAcceptanceTestKernel(objectContainer);
+            kernel.Bind<IObjectContainer>().ToConstant(objectContainer);
+            kernel.Bind<FeatureContext>().ToMethod(ctx => objectContainer.Resolve<FeatureContext>());
 
-            runtimePluginEvents.CustomizeTestThreadDependencies += (sender, args) =>
+            return kernel;
+        }
+
+        protected override IKernel CreateTestThreadContainer(ObjectContainer objectContainer)
+        {
+            if (objectContainer == null)
             {
-                args.ObjectContainer.RegisterFactoryAs(
-                    () =>
-                    {
-                        var objectContainer = args.ObjectContainer;
-                        var containerFinder =
-                            objectContainer.Resolve<ContainerFinder<TestThreadDependenciesAttribute>>();
-                        var setupContainer = containerFinder.SetupContainerFunc();
-                        var container = CreateAcceptanceTestKernel(objectContainer);
-                        RegisterSpecflowTestThreadDependencies(objectContainer, container);
-                        setupContainer?.Invoke(container);
+                throw new ArgumentNullException(nameof(objectContainer));
+            }
 
-                        return container;
-                    });
-            };
+            var kernel = CreateAcceptanceTestKernel(objectContainer);
+            kernel.Bind<IObjectContainer>().ToConstant(objectContainer);
+            kernel.Bind<TestThreadContext>().ToMethod(ctx => objectContainer.Resolve<TestThreadContext>());
 
-            runtimePluginEvents.CustomizeFeatureDependencies += (sender, args) =>
-            {
-                args.ObjectContainer.RegisterFactoryAs(
-                    () =>
-                    {
-                        var objectContainer = args.ObjectContainer;
-                        var containerFinder = objectContainer.Resolve<ContainerFinder<FeatureDependenciesAttribute>>();
-                        var setupContainer = containerFinder.SetupContainerFunc();
-                        var container = CreateAcceptanceTestKernel(objectContainer);
-                        RegisterSpecflowFeatureDependencies(objectContainer, container);
-                        setupContainer?.Invoke(container);
-                        return container;
-                    });
-            };
-
-            runtimePluginEvents.CustomizeScenarioDependencies += (sender, args) =>
-            {
-                args.ObjectContainer.RegisterFactoryAs(
-                    () =>
-                    {
-                        var objectContainer = args.ObjectContainer;
-                        var containerFinder = objectContainer.Resolve<ContainerFinder<ScenarioDependenciesAttribute>>();
-                        var setupContainer = containerFinder.SetupContainerFunc();
-                        var container = CreateAcceptanceTestKernel(objectContainer);
-                        RegisterSpecflowScenarioDependencies(objectContainer, container);
-                        setupContainer(container);
-                        return container;
-                    });
-            };
+            return kernel;
         }
 
         private static IKernel CreateAcceptanceTestKernel(ObjectContainer objectContainer)
@@ -134,30 +66,6 @@ namespace Ninject.SpecFlowPlugin
             }
 
             return new AcceptanceTestKernel();
-        }
-
-        private static void RegisterSpecflowScenarioDependencies(
-            IObjectContainer objectContainer,
-            IBindingRoot container)
-        {
-            container.Bind<IObjectContainer>().ToConstant(objectContainer);
-            container.Bind<ScenarioContext>().ToMethod(ctx => objectContainer.Resolve<ScenarioContext>());
-        }
-
-        private static void RegisterSpecflowFeatureDependencies(
-            IObjectContainer objectContainer,
-            IBindingRoot container)
-        {
-            container.Bind<IObjectContainer>().ToConstant(objectContainer);
-            container.Bind<FeatureContext>().ToMethod(ctx => objectContainer.Resolve<FeatureContext>());
-        }
-
-        private static void RegisterSpecflowTestThreadDependencies(
-            IObjectContainer objectContainer,
-            IBindingRoot container)
-        {
-            container.Bind<IObjectContainer>().ToConstant(objectContainer);
-            container.Bind<TestThreadContext>().ToMethod(ctx => objectContainer.Resolve<TestThreadContext>());
         }
     }
 }

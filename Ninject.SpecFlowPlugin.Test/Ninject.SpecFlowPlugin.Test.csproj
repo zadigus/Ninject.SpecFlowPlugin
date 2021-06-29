@@ -5,6 +5,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <IsPackable>false</IsPackable>
+    <Configurations>Debug;Release;DebugBodi;ReleaseBodi</Configurations>
   </PropertyGroup>
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -17,7 +18,21 @@
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugBodi|AnyCPU'">
+    <DebugType>full</DebugType>
+    <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisTestProjectDebug.ruleset</CodeAnalysisRuleSet>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisTestProject.ruleset</CodeAnalysisRuleSet>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBodi|AnyCPU'">
     <DebugType>pdbonly</DebugType>
     <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisTestProject.ruleset</CodeAnalysisRuleSet>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -38,10 +53,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ninject.SpecFlowPlugin\Ninject.SpecFlowPlugin.csproj" />
+    <ProjectReference Include="..\SpecFlowPluginBase\SpecFlowPluginBase.csproj" />
     <ProjectReference Include="..\TestData\NoDependenciesAttribute\NoDependenciesAttribute.csproj" />
-    <ProjectReference Include="..\TestData\WrongAfterFeatureHookOrder\WrongAfterFeatureHookOrder.csproj" />
-    <ProjectReference Include="..\TestData\WrongAfterScenarioHookOrder\WrongAfterScenarioHookOrder.csproj" />
-    <ProjectReference Include="..\TestData\WrongAfterTestRunHookOrder\WrongAfterTestRunHookOrder.csproj" />
     <ProjectReference Include="..\TestData\WrongAmountInputArgsFeatureDependencies\WrongAmountInputArgsFeatureDependencies.csproj" />
     <ProjectReference Include="..\TestData\WrongAmountInputArgsScenarioDependencies\WrongAmountInputArgsScenarioDependencies.csproj" />
     <ProjectReference Include="..\TestData\WrongAmountInputArgsTestThreadDependencies\WrongAmountInputArgsTestThreadDependencies.csproj" />

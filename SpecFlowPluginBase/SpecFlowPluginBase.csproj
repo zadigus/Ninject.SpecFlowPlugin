@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net462</TargetFramework>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <OutputPath>bin\$(Configuration)\</OutputPath>
+        <DocumentationFile></DocumentationFile>
+        <PackageDescription>Base and generic classes helping to make a SpecFlow plugin for DI framework integration.</PackageDescription>
+        <Configurations>Debug;Release;DebugBodi;ReleaseBodi</Configurations>
+    </PropertyGroup>
+    <PropertyGroup>
+        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+        <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+        <DebugType>full</DebugType>
+        <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisNormalProjectDebug.ruleset</CodeAnalysisRuleSet>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugBodi|AnyCPU'">
+      <DebugType>full</DebugType>
+      <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisNormalProjectDebug.ruleset</CodeAnalysisRuleSet>
+      <EnableNETAnalyzers>true</EnableNETAnalyzers>
+      <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+      <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+        <DebugType>pdbonly</DebugType>
+        <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisNormalProject.ruleset</CodeAnalysisRuleSet>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <EnableNETAnalyzers>true</EnableNETAnalyzers>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseBodi|AnyCPU'">
+      <DebugType>pdbonly</DebugType>
+      <CodeAnalysisRuleSet>..\stylecop\rules\CodeAnalysisNormalProject.ruleset</CodeAnalysisRuleSet>
+      <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+      <EnableNETAnalyzers>true</EnableNETAnalyzers>
+      <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    </PropertyGroup>
+    <ItemGroup>
+        <Compile Include="..\AssemblyInfoGlobal.cs" Link="Properties\AssemblyInfoGlobal.cs" />
+        <Compile Update="Properties\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Properties\Resources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>Resources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="SpecFlow" Version="3.9.8" />
+      <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="JetBrains.Annotations, Version=2020.1.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
+        <HintPath>C:\Program Files\JetBrains\JetBrains Rider 2021.1.1\lib\ReSharperHost\TestRunner\net461\JetBrains.Annotations.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>
