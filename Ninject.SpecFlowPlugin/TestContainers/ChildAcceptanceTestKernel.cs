@@ -6,10 +6,11 @@
     using Ninject.Extensions.ChildKernel;
     using Ninject.Modules;
     using Ninject.Syntax;
+    using SpecFlowPluginBase;
 
     public class ChildAcceptanceTestKernel : ChildKernel
     {
-        private readonly DisposableObjectPool pool = new DisposableObjectPool();
+        private readonly DisposableObjectPool<IKernel> pool = new DisposableObjectPool<IKernel>();
 
         public ChildAcceptanceTestKernel(IResolutionRoot parent, params INinjectModule[] modules)
             : base(parent, modules)

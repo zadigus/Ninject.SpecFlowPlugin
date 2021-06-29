@@ -3,10 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using Ninject.Activation;
+    using SpecFlowPluginBase;
 
     public class AcceptanceTestKernel : StandardKernel
     {
-        private readonly DisposableObjectPool pool = new DisposableObjectPool();
+        private readonly DisposableObjectPool<IKernel> pool = new DisposableObjectPool<IKernel>();
 
         /// <summary>
         ///     This is the only resolution method to override because NinjectTestObjectResolver only calls IKernel.Get,

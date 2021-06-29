@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using BoDi;
     using TechTalk.SpecFlow;
 
     public class DisposableObjectPool<TContainerType> : IDisposable
@@ -44,7 +45,7 @@
 
         private static bool IsPoolable(IDisposable x)
         {
-            return !(x is TContainerType) && !(x is ScenarioContext) && !(x is FeatureContext) && !(x is TestThreadContext);
+            return !(x is TContainerType) && !(x is ObjectContainer) && !(x is ScenarioContext) && !(x is FeatureContext) && !(x is TestThreadContext);
         }
     }
 }
