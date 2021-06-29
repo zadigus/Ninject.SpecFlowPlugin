@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using BoDi;
     using Moq;
+    using Ninject;
     using Ninject.Activation;
     using Ninject.Parameters;
     using Ninject.Planning.Bindings;

@@ -1,4 +1,4 @@
-﻿namespace Ninject.SpecFlowPlugin.Test.TestObjects
+﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration.TestObjects
 {
     using System.Diagnostics.CodeAnalysis;
 

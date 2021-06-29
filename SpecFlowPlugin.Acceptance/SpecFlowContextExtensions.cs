@@ -1,4 +1,4 @@
-﻿namespace SpecFlowPluginBase.Extensions
+﻿namespace SpecFlowPlugin.Acceptance
 {
     using System;
     using System.Diagnostics;

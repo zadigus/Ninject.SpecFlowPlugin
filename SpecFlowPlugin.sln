@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowPluginBase", "SpecF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowPlugin.Acceptance", "SpecFlowPlugin.Acceptance\SpecFlowPlugin.Acceptance.csproj", "{4EBB8909-2544-4E73-B85A-01F8F65639C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.SpecFlowPlugin.Integration", "Ninject.SpecFlowPlugin.Integration\Ninject.SpecFlowPlugin.Integration.csproj", "{32F9C120-D23A-464F-99B5-A78C0B6CC611}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -157,6 +159,14 @@ Global
 		{4EBB8909-2544-4E73-B85A-01F8F65639C9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4EBB8909-2544-4E73-B85A-01F8F65639C9}.ReleaseBodi|Any CPU.ActiveCfg = ReleaseBodi|Any CPU
 		{4EBB8909-2544-4E73-B85A-01F8F65639C9}.ReleaseBodi|Any CPU.Build.0 = ReleaseBodi|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.DebugBodi|Any CPU.ActiveCfg = DebugBodi|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.DebugBodi|Any CPU.Build.0 = DebugBodi|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.ReleaseBodi|Any CPU.ActiveCfg = ReleaseBodi|Any CPU
+		{32F9C120-D23A-464F-99B5-A78C0B6CC611}.ReleaseBodi|Any CPU.Build.0 = ReleaseBodi|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
