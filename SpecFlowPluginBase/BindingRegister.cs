@@ -21,35 +21,6 @@
                 .ToList();
 
             allBindings.ForEach(bindTypeInSingletonScope);
-
-            var invalidBindings = allBindings.Where(BindingContainsAfterHookWithTooHighOrder).ToList();
-
-            if (invalidBindings.Count > 0)
-            {
-                var hookNames = invalidBindings.Select(hook => hook.Name);
-                var listOfHooks = string.Join(",", hookNames);
-                throw new SpecFlowPluginException(
-                    string.Format(CultureInfo.CurrentCulture, Resources.TooHighOrderInAfterHook, listOfHooks),
-                    SpecFlowPluginError.IncompatibleHookFound);
-            }
-        }
-
-        private static bool BindingContainsAfterHookWithTooHighOrder(Type binding)
-        {
-            var methods = binding.GetMethods();
-            return methods.Any(
-                method =>
-                {
-                    var afterScenarioAttributes = method.GetCustomAttributes(typeof(AfterScenarioAttribute), false)
-                        .Cast<HookAttribute>();
-                    var afterFeatureAttributes = method.GetCustomAttributes(typeof(AfterFeatureAttribute), false)
-                        .Cast<HookAttribute>();
-                    var afterTestRunAttributes = method.GetCustomAttributes(typeof(AfterTestRunAttribute), false)
-                        .Cast<HookAttribute>();
-                    var allAttributes = afterScenarioAttributes.Concat(afterFeatureAttributes)
-                        .Concat(afterTestRunAttributes);
-                    return allAttributes.Any(attribute => attribute.Order >= Constants.ContainerDisposerHookOrder);
-                });
         }
     }
 }

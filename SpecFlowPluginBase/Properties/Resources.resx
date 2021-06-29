@@ -24,9 +24,6 @@
     <data name="ScenarioDependenciesNotFound" xml:space="preserve">
         <value>Unable to find scenario dependencies! Mark a static method that returns a ContainerBuilder with [ScenarioDependencies]!</value>
     </data>
-    <data name="TooHighOrderInAfterHook" xml:space="preserve">
-        <value>The following bindings contain an AfterScenario hook with too high priority: {0}. This is a problem because they will be called after the SpecFlowPlugin's hook disposing all the disposable objects. In that case, you may mistakenly try in SpecFlow hooks to access objects that have already been disposed.</value>
-    </data>
     <data name="WrongAmountOfArgsToContainerConfigurator" xml:space="preserve">
         <value>[{0}] The method has {1} arguments instead of the expected {2}.</value>
     </data>

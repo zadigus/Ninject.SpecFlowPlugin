@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace SpecFlowPluginBase.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -36,7 +39,7 @@ namespace SpecFlowPluginBase.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ninject.SpecFlowPlugin.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SpecFlowPluginBase.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -72,15 +75,6 @@ namespace SpecFlowPluginBase.Properties {
         internal static string ScenarioDependenciesNotFound {
             get {
                 return ResourceManager.GetString("ScenarioDependenciesNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The following bindings contain an AfterScenario hook with too high priority: {0}. This is a problem because they will be called after the SpecFlowPlugin&apos;s hook disposing all the disposable objects. In that case, you may mistakenly try in SpecFlow hooks to access objects that have already been disposed..
-        /// </summary>
-        internal static string TooHighOrderInAfterHook {
-            get {
-                return ResourceManager.GetString("TooHighOrderInAfterHook", resourceCulture);
             }
         }
         
