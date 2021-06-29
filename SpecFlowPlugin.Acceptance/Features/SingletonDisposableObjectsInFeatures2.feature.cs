@@ -86,8 +86,8 @@ to be executed, we need write this feature twice and write a hacky scenario.", P
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Singleton disposable feature dependencies 1 are disposed after feature", "    In order to check if a singleton disposable feature dependency actually is di" +
-                    "sposed\r\n    after feature execution, we need to assert disposal  on test thread " +
-                    "context.", tagsOfScenario, argumentsOfScenario, this._featureTags);
+                    "sposed\r\n    after feature execution, we need to assert disposal on test thread c" +
+                    "ontext.", tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 11
     this.ScenarioInitialize(scenarioInfo);
 #line hidden

@@ -19,9 +19,7 @@
             // for that reason, we set the flag in the test thread context
             if (this.testThreadContext.Get<bool>(ContextKeys.MustDisposeTransientFeatureDependency2))
             {
-                this.testThreadContext.Save(
-                    true,
-                    ContextKeys.TransientDisposableFeatureDependency2IsDisposed);
+                this.testThreadContext.Save(true, ContextKeys.TransientDisposableFeatureDependency2IsDisposed);
             }
         }
     }

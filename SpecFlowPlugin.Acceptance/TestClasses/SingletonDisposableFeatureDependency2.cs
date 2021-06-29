@@ -19,9 +19,7 @@
             // for that reason, we set the flag in the test thread context
             if (this.testThreadContext.Get<bool>(ContextKeys.MustDisposeSingletonFeatureDependency2))
             {
-                this.testThreadContext.Save(
-                    true,
-                    ContextKeys.SingletonDisposableFeatureDependency2IsDisposed);
+                this.testThreadContext.Save(true, ContextKeys.SingletonDisposableFeatureDependency2IsDisposed);
             }
         }
     }

@@ -11,7 +11,7 @@ to be executed, we need write this feature twice and write a hacky scenario.
     Scenario: Singleton disposable feature dependencies 1 are disposed after feature
 
     In order to check if a singleton disposable feature dependency actually is disposed
-    after feature execution, we need to assert disposal  on test thread context.
+    after feature execution, we need to assert disposal on test thread context.
 
         Given I have injected SingletonDisposableFeatureDependency2 in the binding class StepClassDisposableAfterFeature
         Then SingletonDisposableFeatureDependency1 has been disposed if the previous feature had to dispose it

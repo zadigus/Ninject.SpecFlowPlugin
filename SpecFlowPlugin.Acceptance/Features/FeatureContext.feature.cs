@@ -176,9 +176,6 @@ namespace SpecFlowPlugin.Acceptance.Features
 #line 33
   testRunner.When(string.Format("I remove the key \'MyKeySetInFeatureHook\' from the feature context in {0}", step_Class1), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 34
-  testRunner.Then("the key has been removed from the feature context", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
             }
             this.ScenarioCleanup();
         }

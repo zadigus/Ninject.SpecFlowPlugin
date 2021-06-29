@@ -31,7 +31,6 @@ Feature: Feature Context
 		Then if the feature context contains the key '<step-class2>' then it should not contain the key 'MyKeySetInFeatureHook'
 		And if the feature context does not contain the key '<step-class2>' then it should contain the key 'MyKeySetInFeatureHook'
 		When I remove the key 'MyKeySetInFeatureHook' from the feature context in <step-class1>
-		Then the key has been removed from the feature context
 
 		Examples:
 

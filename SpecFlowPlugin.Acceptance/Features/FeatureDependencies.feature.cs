@@ -35,8 +35,8 @@ namespace SpecFlowPlugin.Acceptance.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Feature Dependencies", "\tAs a tester,\r\n\tI need to inject feature dependencies in my scenarios step defini" +
-                    "tion classes,\r\n\tso that I can access them.", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Feature Dependencies", "As a tester,\r\nI need to inject feature dependencies in my scenarios step definiti" +
+                    "on classes,\r\nso that I can access them.", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -80,11 +80,11 @@ namespace SpecFlowPlugin.Acceptance.Features
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Injected transient feature dependencies are different in all SpecFlow bindings", "\t\tA transient dependency is an object that is created anew each time it is \r\n\t\tbe" +
-                    "ing resolved. Changes in such objects made in a given SpecFlow binding\r\n\t\tshould" +
-                    " not be seen in another SpecFlow binding.", tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Injected transient feature dependencies are different in all SpecFlow bindings", "    A transient dependency is an object that is created anew each time it is\r\n   " +
+                    " being resolved. Changes in such objects made in a given SpecFlow binding\r\n    s" +
+                    "hould not be seen in another SpecFlow binding.", tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 7
- this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -104,20 +104,20 @@ namespace SpecFlowPlugin.Acceptance.Features
             {
                 this.ScenarioStart();
 #line 13
-  testRunner.Given("I have injected TransientFeatureDependency in the binding class StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("I have injected TransientFeatureDependency in the binding class StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 14
-  testRunner.And("the property MyProp of TransientFeatureDependency has value \'value1\' in StepClass" +
+        testRunner.And("the property MyProp of TransientFeatureDependency has value \'value1\' in StepClass" +
                         "1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 15
-  testRunner.And("I have injected TransientFeatureDependency in the binding class StepClass2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.And("I have injected TransientFeatureDependency in the binding class StepClass2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
-  testRunner.When("I set property MyProp of TransientFeatureDependency to \'value2\' in StepClass2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When("I set property MyProp of TransientFeatureDependency to \'value2\' in StepClass2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 17
-  testRunner.Then("the property MyProp of TransientFeatureDependency has value \'value1\' in StepClass" +
+        testRunner.Then("the property MyProp of TransientFeatureDependency has value \'value1\' in StepClass" +
                         "1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -125,14 +125,17 @@ namespace SpecFlowPlugin.Acceptance.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("Injected singleton feature dependencies are the same in all SpecFlow bindings")]
-        public virtual void InjectedSingletonFeatureDependenciesAreTheSameInAllSpecFlowBindings()
+        [NUnit.Framework.DescriptionAttribute("Injected transient feature dependencies are created anew in all scenarios")]
+        [NUnit.Framework.TestCaseAttribute("irrelevant", null)]
+        [NUnit.Framework.TestCaseAttribute("irrelevant", null)]
+        public virtual void InjectedTransientFeatureDependenciesAreCreatedAnewInAllScenarios(string value, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Injected singleton feature dependencies are the same in all SpecFlow bindings", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            argumentsOfScenario.Add("value", value);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Injected transient feature dependencies are created anew in all scenarios", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 19
- this.ScenarioInitialize(scenarioInfo);
+    this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
             bool isFeatureIgnored = default(bool);
@@ -152,17 +155,101 @@ namespace SpecFlowPlugin.Acceptance.Features
             {
                 this.ScenarioStart();
 #line 21
-  testRunner.Given("I have injected SingletonFeatureDependency in the binding class StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+        testRunner.Given("I have injected TransientFeatureDependency in the binding class StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 22
-  testRunner.And("I have injected SingletonFeatureDependency in the binding class StepClass2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+        testRunner.Then("the property MyProp of TransientFeatureDependency has no value in StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
 #line 23
-  testRunner.When("I set property MyProp of SingletonFeatureDependency to \'value\' in StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+        testRunner.When(string.Format("I set property MyProp of TransientFeatureDependency to value \'{0}\' in StepClass1", value), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 24
-  testRunner.Then("the property MyProp of SingletonFeatureDependency has value \'value\' in StepClass2" +
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Injected singleton feature dependencies are the same in all SpecFlow bindings")]
+        public virtual void InjectedSingletonFeatureDependenciesAreTheSameInAllSpecFlowBindings()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Injected singleton feature dependencies are the same in all SpecFlow bindings", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 31
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 33
+        testRunner.Given("I have injected SingletonFeatureDependency in the binding class StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 34
+        testRunner.And("I have injected SingletonFeatureDependency in the binding class StepClass2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 35
+        testRunner.When("I set property MyProp of SingletonFeatureDependency to \'value\' in StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 36
+        testRunner.Then("the property MyProp of SingletonFeatureDependency has value \'value\' in StepClass2" +
                         "", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [NUnit.Framework.TestAttribute()]
+        [NUnit.Framework.DescriptionAttribute("Injected singleton feature dependencies are the same in all scenarios")]
+        [NUnit.Framework.TestCaseAttribute("", "value", null)]
+        [NUnit.Framework.TestCaseAttribute("value", "irrelevant", null)]
+        public virtual void InjectedSingletonFeatureDependenciesAreTheSameInAllScenarios(string readValue, string writtenValue, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("read value", readValue);
+            argumentsOfScenario.Add("written value", writtenValue);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Injected singleton feature dependencies are the same in all scenarios", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+#line 38
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            bool isScenarioIgnored = default(bool);
+            bool isFeatureIgnored = default(bool);
+            if ((tagsOfScenario != null))
+            {
+                isScenarioIgnored = tagsOfScenario.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((this._featureTags != null))
+            {
+                isFeatureIgnored = this._featureTags.Where(__entry => __entry != null).Where(__entry => String.Equals(__entry, "ignore", StringComparison.CurrentCultureIgnoreCase)).Any();
+            }
+            if ((isScenarioIgnored || isFeatureIgnored))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 40
+        testRunner.Given("I have injected SingletonFeatureDependency in the binding class StepClass1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 41
+        testRunner.Then(string.Format("the property MyProp of SingletonFeatureDependency has value \'{0}\' in StepClass1", readValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 42
+        testRunner.When(string.Format("I set property MyProp of SingletonFeatureDependency to value \'{0}\' in StepClass1", writtenValue), ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             }
             this.ScenarioCleanup();
