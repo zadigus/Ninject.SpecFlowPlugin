@@ -1,10 +1,10 @@
-﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration
+﻿namespace Ninject.SpecFlowPlugin.Integration
 {
     using System;
     using FluentAssertions;
-    using global::Ninject;
+    using Ninject;
+    using Ninject.SpecFlowPlugin.Integration.TestObjects;
     using NUnit.Framework;
-    using Selectron.Testing.Ninject.SpecFlowPlugin.Integration.TestObjects;
     using SpecFlowPluginBase.Attributes;
     using TechTalk.SpecFlow;
 

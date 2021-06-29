@@ -1,9 +1,9 @@
-﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration
+﻿namespace Ninject.SpecFlowPlugin.Integration
 {
     using System;
     using System.Reflection;
     using FluentAssertions;
-    using global::Ninject;
+    using Ninject;
     using NUnit.Framework;
     using SpecFlowPluginBase.ContainerLookup;
     using SpecFlowPluginBase.Exceptions;

@@ -1,8 +1,8 @@
-﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration.TestObjects
+﻿namespace Ninject.SpecFlowPlugin.Integration.TestObjects
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using global::Ninject;
+    using Ninject;
     using SpecFlowPluginBase.Attributes;
     using SpecFlowPluginBase.ContainerLookup;
 

@@ -1,4 +1,4 @@
-﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration
+﻿namespace Ninject.SpecFlowPlugin.Integration
 {
     using System;
     using System.Collections.Generic;
@@ -7,9 +7,9 @@
     using System.Linq;
     using BoDi;
     using FluentAssertions;
-    using global::Ninject;
-    using global::Ninject.SpecFlowPlugin;
     using Moq;
+    using Ninject;
+    using Ninject.SpecFlowPlugin;
     using NUnit.Framework;
     using SpecFlowPluginBase.Attributes;
     using SpecFlowPluginBase.ContainerLookup;

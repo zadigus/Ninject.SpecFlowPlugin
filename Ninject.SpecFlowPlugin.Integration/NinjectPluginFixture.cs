@@ -1,10 +1,10 @@
-﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration
+﻿namespace Ninject.SpecFlowPlugin.Integration
 {
     using System.Diagnostics.CodeAnalysis;
     using System.Reflection;
     using FluentAssertions;
-    using global::Ninject.SpecFlowPlugin;
     using Moq;
+    using Ninject.SpecFlowPlugin;
     using NUnit.Framework;
     using TechTalk.SpecFlow.Plugins;
     using TechTalk.SpecFlow.Tracing;

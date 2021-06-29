@@ -1,4 +1,4 @@
-﻿namespace Selectron.Testing.Ninject.SpecFlowPlugin.Integration.TestObjects
+﻿namespace Ninject.SpecFlowPlugin.Integration.TestObjects
 {
     internal interface ITestClass
     {
