@@ -23,13 +23,12 @@
             var actualReturnType = info.ReturnType;
             if (actualReturnType != typeof(void))
             {
-                throw new SpecFlowPluginException(
+                throw new WrongContainerSetupSignatureException(
                     string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.WrongContainerConfiguratorReturnType,
                         typeof(TConfiguratorType),
-                        actualReturnType),
-                    SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                        actualReturnType));
             }
         }
 
@@ -40,14 +39,13 @@
             var actualAmountOfArguments = methodParams.Length;
             if (actualAmountOfArguments != expectedAmountOfArguments)
             {
-                throw new SpecFlowPluginException(
+                throw new WrongContainerSetupSignatureException(
                     string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.WrongAmountOfArgsToContainerConfigurator,
                         typeof(TConfiguratorType),
                         actualAmountOfArguments,
-                        expectedAmountOfArguments),
-                    SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                        expectedAmountOfArguments));
             }
         }
 
@@ -56,14 +54,13 @@
             var actualParameterType = GetActualParameterType<TExpectedArgumentType>(info);
             if (actualParameterType != typeof(TExpectedArgumentType))
             {
-                throw new SpecFlowPluginException(
+                throw new WrongContainerSetupSignatureException(
                     string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.WrongContainerConfiguratorArgument,
                         typeof(TConfiguratorType),
                         actualParameterType,
-                        typeof(TExpectedArgumentType)),
-                    SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                        typeof(TExpectedArgumentType)));
             }
         }
 
@@ -78,13 +75,12 @@
             }
             catch (IndexOutOfRangeException)
             {
-                throw new SpecFlowPluginException(
+                throw new WrongContainerSetupSignatureException(
                     string.Format(
                         CultureInfo.CurrentCulture,
                         Resources.MissingContainerConfiguratorArgument,
                         typeof(TConfiguratorType),
-                        typeof(TExpectedArgumentType)),
-                    SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                        typeof(TExpectedArgumentType)));
             }
         }
     }

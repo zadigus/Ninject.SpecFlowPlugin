@@ -77,9 +77,9 @@
         public void Can_Resolve_Ninject_Kernel_From_ScenarioContainer()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -94,9 +94,9 @@
         public void Can_Resolve_Ninject_Kernel_From_FeatureContainer()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -111,9 +111,9 @@
         public void Can_Resolve_Ninject_Kernel_From_TestThreadContainer()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -128,9 +128,9 @@
         public void Resolved_Scenario_Context_Is_The_Same_For_The_Same_Scenario_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 var scenarioKernel = scenarioContainer.Resolve<IKernel>();
@@ -150,9 +150,9 @@
         public void ObjectContainer_Can_Be_Resolved_From_Scenario_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var expectedScenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 var scenarioKernel = expectedScenarioContainer.Resolve<IKernel>();
@@ -172,9 +172,9 @@
             ObjectContainer_Resolved_From_Scenario_Kernel_Is_Not_Same_As_ObjectContainer_Resolved_From_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
@@ -199,9 +199,9 @@
             ObjectContainer_Resolved_From_Scenario_Kernel_Is_Not_Same_As_ObjectContainer_Resolved_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
@@ -226,9 +226,9 @@
         public void Scenario_Context_Cannot_Be_Resolved_From_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 var featureKernel = featureContainer.Resolve<IKernel>();
@@ -245,9 +245,9 @@
         public void Scenario_Context_Cannot_Be_Resolved_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 var testThreadKernel = testThreadContainer.Resolve<IKernel>();
@@ -264,9 +264,9 @@
         public void Scenario_Kernel_Can_Resolve_Object_From_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
@@ -288,9 +288,9 @@
         public void Scenario_Kernel_Can_Resolve_Object_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(testThreadContainer))
@@ -312,9 +312,9 @@
         public void Resolved_Feature_Context_Is_The_Same_For_The_Same_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -331,9 +331,9 @@
         public void Feature_Context_Can_Be_Resolved_From_Scenario_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
@@ -353,9 +353,9 @@
         public void Feature_Context_Can_Be_Resolved_From_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 var featureKernel = featureContainer.Resolve<IKernel>();
@@ -372,9 +372,9 @@
         public void Resolved_Feature_Context_Is_The_Same_In_Both_Scenario_Kernel_And_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
@@ -395,9 +395,9 @@
         public void Feature_Contexts_Persist_Across_Scenarios()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 using (var scenarioContainer1 = this.CreateScenarioContainer(featureContainer))
@@ -424,9 +424,9 @@
         public void Feature_Context_Cannot_Be_Resolved_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 var testThreadKernel = testThreadContainer.Resolve<IKernel>();
@@ -445,9 +445,9 @@
         public void ObjectContainer_Can_Be_Resolved_From_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var expectedFeatureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 var featureKernel = expectedFeatureContainer.Resolve<IKernel>();
@@ -467,9 +467,9 @@
             ObjectContainer_Resolved_From_Feature_Kernel_Is_Not_Same_As_ObjectContainer_Resolved_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
 
             using (var testThreadContainer = this.CreateScenarioContainer(this.globalContainer))
             {
@@ -492,9 +492,9 @@
         public void Feature_Kernel_Can_Resolve_Object_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
@@ -516,9 +516,9 @@
         public void Resolved_TestThread_Context_Is_The_Same_For_The_Same_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -535,9 +535,9 @@
         public void TestThread_Context_Can_Be_Resolved_From_Scenario_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
@@ -560,9 +560,9 @@
         public void TestThread_Context_Can_Be_Resolved_From_Feature_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
@@ -582,9 +582,9 @@
         public void TestThread_Context_Can_Be_Resolved_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 var testThreadKernel = testThreadContainer.Resolve<IKernel>();
@@ -602,9 +602,9 @@
             Resolved_TestThread_Context_Is_The_Same_In_Scenario_Kernel_And_Feature_Kernel_And_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
@@ -631,9 +631,9 @@
         public void TestThread_Contexts_Persist_Across_Scenarios()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
@@ -665,9 +665,9 @@
         public void TestThread_Contexts_Persist_Across_Features()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 using (var featureContainer1 = this.CreateFeatureContainer(testThreadContainer))
@@ -696,9 +696,9 @@
         public void ObjectContainer_Can_Be_Resolved_From_TestThread_Kernel()
         {
             // Arrange
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerFinder<FeatureDependenciesAttribute>,
-                NoOpContainerFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.pluginEvents);
             using (var expectedTestThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 var testThreadKernel = expectedTestThreadContainer.Resolve<IKernel>();
@@ -712,33 +712,12 @@
         }
 
         [Test]
-        public void Throws_When_No_ScenarioDependenciesAttribute_Is_Found_In_Binding_Assemblies()
-        {
-            // Arrange
-            this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
-                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
-            using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
-            {
-                // Act
-                Action act = () => scenarioContainer.Resolve<IKernel>();
-
-                // Assert
-                act.Should()
-                    .Throw<TargetInvocationException>()
-                    .WithInnerException<SpecFlowPluginException>()
-                    .And.Error.Should()
-                    .Be(SpecFlowPluginError.ScenarioDependenciesNotFound);
-            }
-        }
-
-        [Test]
         public void Does_Not_Throw_When_No_FeatureDependenciesAttribute_Is_Found_In_Binding_Assemblies()
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
-                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>, FeatureContainerSetupFinder<IKernel>,
+                TestThreadContainerSetupFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -754,8 +733,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
-                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>, FeatureContainerSetupFinder<IKernel>,
+                TestThreadContainerSetupFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -781,8 +760,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
-                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>, FeatureContainerSetupFinder<IKernel>,
+                TestThreadContainerSetupFinder<IKernel>>(this.pluginEvents);
             using (var scenarioContainer = this.CreateScenarioContainer(this.globalContainer))
             {
                 // Act
@@ -791,9 +770,7 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<SpecFlowPluginException>()
-                    .And.Error.Should()
-                    .Be(SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                    .WithInnerException<WrongContainerSetupSignatureException>();
             }
         }
 
@@ -812,8 +789,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
-                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>, FeatureContainerSetupFinder<IKernel>,
+                TestThreadContainerSetupFinder<IKernel>>(this.pluginEvents);
             using (var featureContainer = this.CreateFeatureContainer(this.globalContainer))
             {
                 // Act
@@ -822,9 +799,7 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<SpecFlowPluginException>()
-                    .And.Error.Should()
-                    .Be(SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                    .WithInnerException<WrongContainerSetupSignatureException>();
             }
         }
 
@@ -843,8 +818,8 @@
         {
             // Arrange
             this.SetupBindingRegistryWithAssemblyContainingHook(bindingClassType);
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerFinder<IKernel>, FeatureContainerFinder<IKernel>,
-                TestThreadContainerFinder<IKernel>>(this.pluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>, FeatureContainerSetupFinder<IKernel>,
+                TestThreadContainerSetupFinder<IKernel>>(this.pluginEvents);
             using (var testThreadContainer = this.CreateTestThreadContainer(this.globalContainer))
             {
                 // Act
@@ -853,28 +828,26 @@
                 // Assert
                 act.Should()
                     .Throw<TargetInvocationException>()
-                    .WithInnerException<SpecFlowPluginException>()
-                    .And.Error.Should()
-                    .Be(SpecFlowPluginError.WrongDependenciesSetupMethodSignature);
+                    .WithInnerException<WrongContainerSetupSignatureException>();
             }
         }
 
         private void AssociateRuntimeEventsWithPlugin<TScenarioContainerFinder, TFeatureContainerFinder,
             TTestThreadContainerFinder>(RuntimePluginEvents events)
-            where TScenarioContainerFinder : ContainerFinder<ScenarioDependenciesAttribute, IKernel>
-            where TFeatureContainerFinder : ContainerFinder<FeatureDependenciesAttribute, IKernel>
-            where TTestThreadContainerFinder : ContainerFinder<TestThreadDependenciesAttribute, IKernel>
+            where TScenarioContainerFinder : ContainerSetupFinder<ScenarioDependenciesAttribute, IKernel>
+            where TFeatureContainerFinder : ContainerSetupFinder<FeatureDependenciesAttribute, IKernel>
+            where TTestThreadContainerFinder : ContainerSetupFinder<TestThreadDependenciesAttribute, IKernel>
         {
             var plugin = new NinjectPlugin();
 
             this.globalContainer.RegisterTypeAs<NinjectTestObjectResolver, ITestObjectResolver>();
             this.globalContainer
-                .RegisterTypeAs<TScenarioContainerFinder, ContainerFinder<ScenarioDependenciesAttribute, IKernel>>();
+                .RegisterTypeAs<TScenarioContainerFinder, ContainerSetupFinder<ScenarioDependenciesAttribute, IKernel>>();
             this.globalContainer
-                .RegisterTypeAs<TFeatureContainerFinder, ContainerFinder<FeatureDependenciesAttribute, IKernel>>();
+                .RegisterTypeAs<TFeatureContainerFinder, ContainerSetupFinder<FeatureDependenciesAttribute, IKernel>>();
             this.globalContainer
                 .RegisterTypeAs<TTestThreadContainerFinder,
-                    ContainerFinder<TestThreadDependenciesAttribute, IKernel>>();
+                    ContainerSetupFinder<TestThreadDependenciesAttribute, IKernel>>();
 
             plugin.Initialize(events, Mock.Of<RuntimePluginParameters>(), Mock.Of<UnitTestProviderConfiguration>());
             events.RaiseCustomizeGlobalDependencies(this.globalContainer, this.specFlowConfiguration);

@@ -3,10 +3,10 @@
     using SpecFlowPluginBase.Attributes;
     using TechTalk.SpecFlow.Bindings;
 
-    public class TestThreadContainerFinder<TContainerType> : ContainerFinder<TestThreadDependenciesAttribute, TContainerType>
+    public class TestThreadContainerSetupFinder<TContainerType> : ContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>
         where TContainerType : class
     {
-        public TestThreadContainerFinder(IBindingRegistry bindingRegistry)
+        public TestThreadContainerSetupFinder(IBindingRegistry bindingRegistry)
             : base(bindingRegistry)
         {
         }

@@ -70,15 +70,6 @@ namespace SpecFlowPluginBase.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to find scenario dependencies! Mark a static method that returns a ContainerBuilder with [ScenarioDependencies]!.
-        /// </summary>
-        internal static string ScenarioDependenciesNotFound {
-            get {
-                return ResourceManager.GetString("ScenarioDependenciesNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to [{0}] The method has {1} arguments instead of the expected {2}..
         /// </summary>
         internal static string WrongAmountOfArgsToContainerConfigurator {

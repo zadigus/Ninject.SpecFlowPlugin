@@ -7,13 +7,13 @@
     using SpecFlowPluginBase.Extensions;
     using TechTalk.SpecFlow.Bindings;
 
-    public abstract class ContainerFinder<TDependenciesAttribute, TContainerType>
+    public class ContainerSetupFinder<TDependenciesAttribute, TContainerType>
         where TDependenciesAttribute : ContainerConfigurationAttribute
         where TContainerType : class
     {
         private readonly IBindingRegistry bindingRegistry;
 
-        protected ContainerFinder(IBindingRegistry bindingRegistry)
+        protected ContainerSetupFinder(IBindingRegistry bindingRegistry)
         {
             this.bindingRegistry = bindingRegistry;
         }

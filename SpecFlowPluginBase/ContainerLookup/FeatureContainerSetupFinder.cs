@@ -3,10 +3,10 @@
     using SpecFlowPluginBase.Attributes;
     using TechTalk.SpecFlow.Bindings;
 
-    public class FeatureContainerFinder<TContainerType> : ContainerFinder<FeatureDependenciesAttribute, TContainerType>
+    public class FeatureContainerSetupFinder<TContainerType> : ContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>
         where TContainerType : class
     {
-        public FeatureContainerFinder(IBindingRegistry bindingRegistry)
+        public FeatureContainerSetupFinder(IBindingRegistry bindingRegistry)
             : base(bindingRegistry)
         {
         }

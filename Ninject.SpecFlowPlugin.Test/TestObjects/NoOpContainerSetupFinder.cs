@@ -9,10 +9,10 @@
         "Microsoft.Performance",
         "CA1812:AvoidUninstantiatedInternalClasses",
         Justification = "instantiation is indirect")]
-    internal class NoOpContainerFinder<T> : ContainerFinder<T, IKernel>
+    internal class NoOpContainerSetupFinder<T> : ContainerSetupFinder<T, IKernel>
         where T : ContainerConfigurationAttribute
     {
-        public NoOpContainerFinder()
+        public NoOpContainerSetupFinder()
             : base(null)
         {
         }

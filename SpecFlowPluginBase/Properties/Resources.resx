@@ -21,9 +21,6 @@
     <data name="MissingContainerConfiguratorArgument" xml:space="preserve">
         <value>[{0}] Missing single argument that should have type {1}</value>
     </data>
-    <data name="ScenarioDependenciesNotFound" xml:space="preserve">
-        <value>Unable to find scenario dependencies! Mark a static method that returns a ContainerBuilder with [ScenarioDependencies]!</value>
-    </data>
     <data name="WrongAmountOfArgsToContainerConfigurator" xml:space="preserve">
         <value>[{0}] The method has {1} arguments instead of the expected {2}.</value>
     </data>

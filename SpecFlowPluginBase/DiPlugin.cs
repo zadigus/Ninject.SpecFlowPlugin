@@ -43,32 +43,32 @@
                 // temporary fix for CustomizeGlobalDependencies called multiple times
                 // see https://github.com/techtalk/SpecFlow/issues/948
                 if (!args.ObjectContainer
-                    .IsRegistered<ContainerFinder<ScenarioDependenciesAttribute, TContainerType>>())
+                    .IsRegistered<ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>>())
                 {
                     // an extra lock to ensure that there are not two super fast threads re-registering the same stuff
                     lock (this.registrationLock)
                     {
                         if (!args.ObjectContainer
-                            .IsRegistered<ContainerFinder<ScenarioDependenciesAttribute, TContainerType>>())
+                            .IsRegistered<ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>>())
                         {
                             args.ObjectContainer
                                 .RegisterTypeAs<TTestObjectResolver, ITestObjectResolver>();
                             args.ObjectContainer
-                                .RegisterTypeAs<TestThreadContainerFinder<TContainerType>,
-                                    ContainerFinder<TestThreadDependenciesAttribute, TContainerType>>();
+                                .RegisterTypeAs<TestThreadContainerSetupFinder<TContainerType>,
+                                    ContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>();
                             args.ObjectContainer
-                                .RegisterTypeAs<FeatureContainerFinder<TContainerType>,
-                                    ContainerFinder<FeatureDependenciesAttribute, TContainerType>>();
+                                .RegisterTypeAs<FeatureContainerSetupFinder<TContainerType>,
+                                    ContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>>();
                             args.ObjectContainer
-                                .RegisterTypeAs<ScenarioContainerFinder<TContainerType>,
-                                    ContainerFinder<ScenarioDependenciesAttribute, TContainerType>>();
+                                .RegisterTypeAs<ScenarioContainerSetupFinder<TContainerType>,
+                                    ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>>();
                         }
                     }
 
                     // workaround for parallel execution issue - this should be rather a feature in BoDi?
-                    args.ObjectContainer.Resolve<ContainerFinder<TestThreadDependenciesAttribute, TContainerType>>();
-                    args.ObjectContainer.Resolve<ContainerFinder<FeatureDependenciesAttribute, TContainerType>>();
-                    args.ObjectContainer.Resolve<ContainerFinder<ScenarioDependenciesAttribute, TContainerType>>();
+                    args.ObjectContainer.Resolve<ContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>();
+                    args.ObjectContainer.Resolve<ContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>>();
+                    args.ObjectContainer.Resolve<ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>>();
                 }
             };
 
@@ -79,7 +79,7 @@
                     {
                         var objectContainer = args.ObjectContainer;
                         var containerFinder = objectContainer
-                            .Resolve<ContainerFinder<TestThreadDependenciesAttribute, TContainerType>>();
+                            .Resolve<ContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>();
                         var setupContainer = containerFinder.SetupContainerFunc();
                         var container = this.CreateTestThreadContainer(objectContainer);
                         setupContainer?.Invoke(container);
@@ -95,7 +95,7 @@
                     {
                         var objectContainer = args.ObjectContainer;
                         var containerFinder = objectContainer
-                            .Resolve<ContainerFinder<FeatureDependenciesAttribute, TContainerType>>();
+                            .Resolve<ContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>>();
                         var setupContainer = containerFinder.SetupContainerFunc();
                         var container = this.CreateFeatureContainer(objectContainer);
                         setupContainer?.Invoke(container);
@@ -111,10 +111,10 @@
                     {
                         var objectContainer = args.ObjectContainer;
                         var containerFinder = objectContainer
-                            .Resolve<ContainerFinder<ScenarioDependenciesAttribute, TContainerType>>();
+                            .Resolve<ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>>();
                         var setupContainer = containerFinder.SetupContainerFunc();
                         var container = this.CreateScenarioContainer(objectContainer);
-                        setupContainer(container);
+                        setupContainer?.Invoke(container);
 
                         return container;
                     });
