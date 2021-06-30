@@ -8,7 +8,6 @@
     using BoDi;
     using FluentAssertions;
     using Moq;
-    using Ninject;
     using Ninject.SpecFlowPlugin;
     using NUnit.Framework;
     using SpecFlowPluginBase.Attributes;
@@ -20,13 +19,15 @@
     using TechTalk.SpecFlow.Infrastructure;
     using TechTalk.SpecFlow.Plugins;
     using TechTalk.SpecFlow.UnitTestProvider;
+    using static ContainerOperations.ContainerBinders;
+    using static ContainerOperations.ContainerResolvers;
 
     public class BaseFixture<TContainerType>
         where TContainerType : class
     {
-        private readonly Func<object, Type, object> resolver;
-
         private readonly Action<object, Type, Type> binder;
+
+        private readonly Func<object, Type, object> resolver;
 
         private readonly SpecFlowConfiguration specFlowConfiguration = ConfigurationLoader.GetDefault();
 
@@ -34,26 +35,9 @@
 
         public BaseFixture()
         {
-            this.resolver = this.Resolvers[typeof(TContainerType)];
-            this.binder = this.Binders[typeof(TContainerType)];
+            this.resolver = GetResolver<TContainerType>();
+            this.binder = GetBinder<TContainerType>();
         }
-
-        // TODO: this is not OCP-compliant
-        protected Dictionary<Type, Func<object, Type, object>> Resolvers { get; } =
-            new Dictionary<Type, Func<object, Type, object>>
-            {
-                { typeof(IKernel), (container, serviceType) => (container as IKernel).Get(serviceType) }
-            };
-
-        protected Dictionary<Type, Action<object, Type, Type>> Binders { get; } =
-            new Dictionary<Type, Action<object, Type, Type>>
-            {
-                {
-                    typeof(IKernel),
-                    (container, serviceType, serviceInterfaceType) =>
-                        (container as IKernel).Bind(serviceInterfaceType).To(serviceType)
-                }
-            };
 
         protected ObjectContainer GlobalContainer { get; private set; }
 
