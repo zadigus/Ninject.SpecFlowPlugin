@@ -1,4 +1,4 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using System;
     using System.Reflection;
@@ -9,14 +9,16 @@
     using SpecFlowPluginBase.Exceptions;
     using WrongReturnTypeScenarioDependencies.Hooks;
 
-    [TestFixture]
-    public class ContainerSetupFixture : BaseFixture
+    [TestFixture(typeof(IKernel))]
+    public class ContainerSetupFixture<TContainerType> : BaseFixture<TContainerType>
+        where TContainerType : class
     {
         [SetUp]
         public void SetUp()
         {
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>,
-                FeatureContainerSetupFinder<IKernel>, TestThreadContainerSetupFinder<IKernel>>(this.PluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<TContainerType>,
+                FeatureContainerSetupFinder<TContainerType>, TestThreadContainerSetupFinder<TContainerType>>(
+                this.PluginEvents);
         }
 
         [TestCase(
@@ -25,7 +27,7 @@
         [TestCase(
             typeof(WrongInputArgTypeScenarioDependencies.Hooks.NoOpHook),
             Description =
-                "The DependenciesConfigurator.SetupScenarioContainer method's argument is not of type IKernel.")]
+                "The DependenciesConfigurator.SetupScenarioContainer method's argument is not of type TContainerType.")]
         [TestCase(
             typeof(WrongAmountInputArgsScenarioDependencies.Hooks.NoOpHook),
             Description =
@@ -37,7 +39,7 @@
             using (var scenarioContainer = this.CreateScenarioContainer(this.GlobalContainer))
             {
                 // Act
-                Action act = () => scenarioContainer.Resolve<IKernel>();
+                Action act = () => scenarioContainer.Resolve<TContainerType>();
 
                 // Assert
                 act.Should()
@@ -52,7 +54,7 @@
         [TestCase(
             typeof(WrongInputArgTypeFeatureDependencies.Hooks.NoOpHook),
             Description =
-                "The DependenciesConfigurator.SetupFeatureContainer method's argument is not of type IKernel.")]
+                "The DependenciesConfigurator.SetupFeatureContainer method's argument is not of type TContainerType.")]
         [TestCase(
             typeof(WrongAmountInputArgsFeatureDependencies.Hooks.NoOpHook),
             Description =
@@ -64,7 +66,7 @@
             using (var featureContainer = this.CreateFeatureContainer(this.GlobalContainer))
             {
                 // Act
-                Action act = () => featureContainer.Resolve<IKernel>();
+                Action act = () => featureContainer.Resolve<TContainerType>();
 
                 // Assert
                 act.Should()
@@ -79,7 +81,7 @@
         [TestCase(
             typeof(WrongInputArgTypeTestThreadDependencies.Hooks.NoOpHook),
             Description =
-                "The DependenciesConfigurator.SetupTestThreadContainer method's argument is not of type IKernel.")]
+                "The DependenciesConfigurator.SetupTestThreadContainer method's argument is not of type TContainerType.")]
         [TestCase(
             typeof(WrongAmountInputArgsTestThreadDependencies.Hooks.NoOpHook),
             Description =
@@ -91,7 +93,7 @@
             using (var testThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
                 // Act
-                Action act = () => testThreadContainer.Resolve<IKernel>();
+                Action act = () => testThreadContainer.Resolve<TContainerType>();
 
                 // Assert
                 act.Should()

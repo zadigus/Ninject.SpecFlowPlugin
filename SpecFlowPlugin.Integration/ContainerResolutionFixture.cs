@@ -1,21 +1,23 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using BoDi;
     using FluentAssertions;
     using Ninject;
-    using Ninject.SpecFlowPlugin.Integration.TestObjects;
     using NUnit.Framework;
+    using SpecFlowPlugin.Integration.TestObjects;
     using SpecFlowPluginBase.Attributes;
 
-    [TestFixture]
-    public class ContainerResolutionFixture : BaseFixture
+    [TestFixture(typeof(IKernel))]
+    public class ContainerResolutionFixture<TContainerType> : BaseFixture<TContainerType>
+        where TContainerType : class
     {
         [SetUp]
         public void SetUp()
         {
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
-                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.PluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<
+                NoOpContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>(this.PluginEvents);
         }
 
         [Test]
@@ -25,7 +27,7 @@
             using (var scenarioContainer = this.CreateScenarioContainer(this.GlobalContainer))
             {
                 // Act
-                var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                 // Assert
                 scenarioKernel.Should().NotBeNull();
@@ -39,7 +41,7 @@
             using (var featureContainer = this.CreateFeatureContainer(this.GlobalContainer))
             {
                 // Act
-                var featureKernel = featureContainer.Resolve<IKernel>();
+                var featureKernel = featureContainer.Resolve<TContainerType>();
 
                 // Assert
                 featureKernel.Should().NotBeNull();
@@ -53,7 +55,7 @@
             using (var testThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
                 // Act
-                var testThreadKernel = testThreadContainer.Resolve<IKernel>();
+                var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
 
                 // Assert
                 testThreadKernel.Should().NotBeNull();
@@ -68,10 +70,10 @@
             // Arrange
             using (var expectedScenarioContainer = this.CreateScenarioContainer(this.GlobalContainer))
             {
-                var scenarioKernel = expectedScenarioContainer.Resolve<IKernel>();
+                var scenarioKernel = expectedScenarioContainer.Resolve<TContainerType>();
 
                 // Act
-                var actualScenarioContainer = scenarioKernel.Get<IObjectContainer>();
+                var actualScenarioContainer = this.ResolveFromCustomContainer<IObjectContainer>(scenarioKernel);
 
                 // Assert
                 actualScenarioContainer.Should().BeSameAs(expectedScenarioContainer);
@@ -89,12 +91,12 @@
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
                 {
-                    var featureKernel = featureContainer.Resolve<IKernel>();
-                    var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                    var featureKernel = featureContainer.Resolve<TContainerType>();
+                    var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                     // Act
-                    var objectContainerFromFeatureKernel = featureKernel.Get<IObjectContainer>();
-                    var objectContainerFromScenarioKernel = scenarioKernel.Get<IObjectContainer>();
+                    var objectContainerFromFeatureKernel = this.ResolveFromCustomContainer<IObjectContainer>(featureKernel);
+                    var objectContainerFromScenarioKernel = this.ResolveFromCustomContainer<IObjectContainer>(scenarioKernel);
 
                     // Assert
                     objectContainerFromScenarioKernel.Should().NotBeSameAs(objectContainerFromFeatureKernel);
@@ -115,12 +117,12 @@
                 {
                     using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
                     {
-                        var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                        var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                        var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                        var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                         // Act
-                        var objectContainerFromTestThreadKernel = testThreadKernel.Get<IObjectContainer>();
-                        var objectContainerFromScenarioKernel = scenarioKernel.Get<IObjectContainer>();
+                        var objectContainerFromTestThreadKernel = this.ResolveFromCustomContainer<IObjectContainer>(testThreadKernel);
+                        var objectContainerFromScenarioKernel = this.ResolveFromCustomContainer<IObjectContainer>(scenarioKernel);
 
                         // Assert
                         objectContainerFromScenarioKernel.Should().NotBeSameAs(objectContainerFromTestThreadKernel);
@@ -137,10 +139,10 @@
             // Arrange
             using (var expectedFeatureContainer = this.CreateFeatureContainer(this.GlobalContainer))
             {
-                var featureKernel = expectedFeatureContainer.Resolve<IKernel>();
+                var featureKernel = expectedFeatureContainer.Resolve<TContainerType>();
 
                 // Act
-                var actualFeatureContainer = featureKernel.Get<IObjectContainer>();
+                var actualFeatureContainer = this.ResolveFromCustomContainer<IObjectContainer>(featureKernel);
 
                 // Assert
                 actualFeatureContainer.Should().BeSameAs(expectedFeatureContainer);
@@ -158,12 +160,12 @@
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
                 {
-                    var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                    var featureKernel = featureContainer.Resolve<IKernel>();
+                    var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                    var featureKernel = featureContainer.Resolve<TContainerType>();
 
                     // Act
-                    var objectContainerFromFeatureKernel = featureKernel.Get<IObjectContainer>();
-                    var objectContainerFromTestThreadKernel = testThreadKernel.Get<IObjectContainer>();
+                    var objectContainerFromFeatureKernel = this.ResolveFromCustomContainer<IObjectContainer>(featureKernel);
+                    var objectContainerFromTestThreadKernel = this.ResolveFromCustomContainer<IObjectContainer>(testThreadKernel);
 
                     // Assert
                     objectContainerFromTestThreadKernel.Should().NotBeSameAs(objectContainerFromFeatureKernel);
@@ -179,10 +181,10 @@
             // Arrange
             using (var expectedTestThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
-                var testThreadKernel = expectedTestThreadContainer.Resolve<IKernel>();
+                var testThreadKernel = expectedTestThreadContainer.Resolve<TContainerType>();
 
                 // Act
-                var actualTestThreadContainer = testThreadKernel.Get<IObjectContainer>();
+                var actualTestThreadContainer = this.ResolveFromCustomContainer<IObjectContainer>(testThreadKernel);
 
                 // Assert
                 actualTestThreadContainer.Should().BeSameAs(expectedTestThreadContainer);

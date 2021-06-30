@@ -1,8 +1,7 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration.TestObjects
+﻿namespace SpecFlowPlugin.Integration.TestObjects
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Ninject;
     using SpecFlowPluginBase.Attributes;
     using SpecFlowPluginBase.ContainerLookup;
 
@@ -10,15 +9,16 @@
         "Microsoft.Performance",
         "CA1812:AvoidUninstantiatedInternalClasses",
         Justification = "instantiation is indirect")]
-    internal class NoOpContainerSetupFinder<T> : ContainerSetupFinder<T, IKernel>
+    internal class NoOpContainerSetupFinder<T, TContainerType> : ContainerSetupFinder<T, TContainerType>
         where T : ContainerConfigurationAttribute
+        where TContainerType : class
     {
         public NoOpContainerSetupFinder()
             : base(null)
         {
         }
 
-        protected override Action<IKernel> FindSetupContainer()
+        protected override Action<TContainerType> FindSetupContainer()
         {
             return kernel => { };
         }

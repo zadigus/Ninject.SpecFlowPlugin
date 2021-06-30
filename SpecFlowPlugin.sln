@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowPluginBase", "SpecF
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ninject.SpecFlowPlugin.Acceptance", "Ninject.SpecFlowPlugin.Acceptance\Ninject.SpecFlowPlugin.Acceptance.csproj", "{4EBB8909-2544-4E73-B85A-01F8F65639C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ninject.SpecFlowPlugin.Integration", "Ninject.SpecFlowPlugin.Integration\Ninject.SpecFlowPlugin.Integration.csproj", "{32F9C120-D23A-464F-99B5-A78C0B6CC611}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecFlowPlugin.Integration", "SpecFlowPlugin.Integration\SpecFlowPlugin.Integration.csproj", "{32F9C120-D23A-464F-99B5-A78C0B6CC611}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

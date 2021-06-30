@@ -1,21 +1,23 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using System;
     using FluentAssertions;
     using Ninject;
-    using Ninject.SpecFlowPlugin.Integration.TestObjects;
     using NUnit.Framework;
+    using SpecFlowPlugin.Integration.TestObjects;
     using SpecFlowPluginBase.Attributes;
 
-    [TestFixture]
-    public class ChildContainerFixture : BaseFixture
+    [TestFixture(typeof(IKernel))]
+    public class ChildContainerFixture<TContainerType> : BaseFixture<TContainerType>
+        where TContainerType : class
     {
         [SetUp]
         public void SetUp()
         {
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
-                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.PluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<
+                NoOpContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>(this.PluginEvents);
         }
 
         [Test]
@@ -26,12 +28,12 @@
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
                 {
-                    var featureKernel = featureContainer.Resolve<IKernel>();
-                    featureKernel.Bind<ITestClass>().To<TestClass>();
-                    var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                    var featureKernel = featureContainer.Resolve<TContainerType>();
+                    this.RegisterTransientInCustomContainer<TestClass, ITestClass>(featureKernel);
+                    var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                     // Act
-                    Action act = () => scenarioKernel.Get<ITestClass>();
+                    Action act = () => this.ResolveFromCustomContainer<ITestClass>(scenarioKernel);
 
                     // Assert
                     act.Should().NotThrow();
@@ -47,12 +49,12 @@
             {
                 using (var scenarioContainer = this.CreateScenarioContainer(testThreadContainer))
                 {
-                    var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                    testThreadKernel.Bind<ITestClass>().To<TestClass>();
-                    var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                    var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                    this.RegisterTransientInCustomContainer<TestClass, ITestClass>(testThreadKernel);
+                    var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                     // Act
-                    Action act = () => scenarioKernel.Get<ITestClass>();
+                    Action act = () => this.ResolveFromCustomContainer<ITestClass>(scenarioKernel);
 
                     // Assert
                     act.Should().NotThrow();
@@ -68,12 +70,12 @@
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
                 {
-                    var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                    testThreadKernel.Bind<ITestClass>().To<TestClass>();
-                    var featureKernel = featureContainer.Resolve<IKernel>();
+                    var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                    this.RegisterTransientInCustomContainer<TestClass, ITestClass>(testThreadKernel);
+                    var featureKernel = featureContainer.Resolve<TContainerType>();
 
                     // Act
-                    Action act = () => featureKernel.Get<ITestClass>();
+                    Action act = () => this.ResolveFromCustomContainer<ITestClass>(featureKernel);
 
                     // Assert
                     act.Should().NotThrow();

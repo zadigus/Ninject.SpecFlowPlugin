@@ -1,22 +1,24 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using System;
     using FluentAssertions;
     using Ninject;
-    using Ninject.SpecFlowPlugin.Integration.TestObjects;
     using NUnit.Framework;
+    using SpecFlowPlugin.Integration.TestObjects;
     using SpecFlowPluginBase.Attributes;
     using TechTalk.SpecFlow;
 
-    [TestFixture]
-    public class ScenarioContextFixture : BaseFixture
+    [TestFixture(typeof(IKernel))]
+    public class ScenarioContextFixture<TContainerType> : BaseFixture<TContainerType>
+        where TContainerType : class
     {
         [SetUp]
         public void SetUp()
         {
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
-                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.PluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<
+                NoOpContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>(this.PluginEvents);
         }
 
         [Test]
@@ -25,11 +27,11 @@
             // Arrange
             using (var scenarioContainer = this.CreateScenarioContainer(this.GlobalContainer))
             {
-                var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                 // Act
-                var scenarioContext1 = scenarioKernel.Get<ScenarioContext>();
-                var scenarioContext2 = scenarioKernel.Get<ScenarioContext>();
+                var scenarioContext1 = this.ResolveFromCustomContainer<ScenarioContext>(scenarioKernel);
+                var scenarioContext2 = this.ResolveFromCustomContainer<ScenarioContext>(scenarioKernel);
 
                 // Assert
                 scenarioContext2.Should().BeSameAs(scenarioContext1);
@@ -42,10 +44,10 @@
             // Arrange
             using (var featureContainer = this.CreateFeatureContainer(this.GlobalContainer))
             {
-                var featureKernel = featureContainer.Resolve<IKernel>();
+                var featureKernel = featureContainer.Resolve<TContainerType>();
 
                 // Act
-                Action act = () => featureKernel.Get<ScenarioContext>();
+                Action act = () => this.ResolveFromCustomContainer<ScenarioContext>(featureKernel);
 
                 // Assert
                 act.Should().Throw<ActivationException>();
@@ -58,10 +60,10 @@
             // Arrange
             using (var testThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
-                var testThreadKernel = testThreadContainer.Resolve<IKernel>();
+                var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
 
                 // Act
-                Action act = () => testThreadKernel.Get<ScenarioContext>();
+                Action act = () => this.ResolveFromCustomContainer<ScenarioContext>(testThreadKernel);
 
                 // Assert
                 act.Should().Throw<ActivationException>();

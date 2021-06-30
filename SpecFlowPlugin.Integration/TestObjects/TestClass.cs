@@ -1,4 +1,4 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration.TestObjects
+﻿namespace SpecFlowPlugin.Integration.TestObjects
 {
     using System.Diagnostics.CodeAnalysis;
 

@@ -1,4 +1,4 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using System;
     using FluentAssertions;
@@ -7,15 +7,17 @@
     using NUnit.Framework;
     using SpecFlowPluginBase.ContainerLookup;
 
-    [TestFixture]
-    public class DependenciesAttributeFixture : BaseFixture
+    [TestFixture(typeof(IKernel))]
+    public class DependenciesAttributeFixture<TContainerType> : BaseFixture<TContainerType>
+        where TContainerType : class
     {
         [SetUp]
         public void SetUp()
         {
             this.SetupBindingRegistryWithAssemblyContainingHook(typeof(NoOpHook));
-            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<IKernel>,
-                FeatureContainerSetupFinder<IKernel>, TestThreadContainerSetupFinder<IKernel>>(this.PluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<ScenarioContainerSetupFinder<TContainerType>,
+                FeatureContainerSetupFinder<TContainerType>, TestThreadContainerSetupFinder<TContainerType>>(
+                this.PluginEvents);
         }
 
         [Test]
@@ -25,7 +27,7 @@
             using (var scenarioContainer = this.CreateScenarioContainer(this.GlobalContainer))
             {
                 // Act
-                Action act = () => scenarioContainer.Resolve<IKernel>();
+                Action act = () => scenarioContainer.Resolve<TContainerType>();
 
                 // Assert
                 act.Should().NotThrow();
@@ -39,7 +41,7 @@
             using (var featureContainer = this.CreateFeatureContainer(this.GlobalContainer))
             {
                 // Act
-                Action act = () => featureContainer.Resolve<IKernel>();
+                Action act = () => featureContainer.Resolve<TContainerType>();
 
                 // Assert
                 act.Should().NotThrow();
@@ -53,7 +55,7 @@
             using (var testThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
                 // Act
-                Action act = () => testThreadContainer.Resolve<IKernel>();
+                Action act = () => testThreadContainer.Resolve<TContainerType>();
 
                 // Assert
                 act.Should().NotThrow();

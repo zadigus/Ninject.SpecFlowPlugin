@@ -1,22 +1,24 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using System;
     using FluentAssertions;
     using Ninject;
-    using Ninject.SpecFlowPlugin.Integration.TestObjects;
     using NUnit.Framework;
+    using SpecFlowPlugin.Integration.TestObjects;
     using SpecFlowPluginBase.Attributes;
     using TechTalk.SpecFlow;
 
-    [TestFixture]
-    public class TestThreadContextFixture : BaseFixture
+    [TestFixture(typeof(IKernel))]
+    public class TestThreadContextFixture<TContainerType> : BaseFixture<TContainerType>
+        where TContainerType : class
     {
         [SetUp]
         public void SetUp()
         {
-            this.AssociateRuntimeEventsWithPlugin<NoOpContainerSetupFinder<ScenarioDependenciesAttribute>,
-                NoOpContainerSetupFinder<FeatureDependenciesAttribute>,
-                NoOpContainerSetupFinder<TestThreadDependenciesAttribute>>(this.PluginEvents);
+            this.AssociateRuntimeEventsWithPlugin<
+                NoOpContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>,
+                NoOpContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>(this.PluginEvents);
         }
 
         [Test]
@@ -26,9 +28,9 @@
             using (var testThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
                 // Act
-                var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                var testThreadContext1 = testThreadKernel.Get<TestThreadContext>();
-                var testThreadContext2 = testThreadKernel.Get<TestThreadContext>();
+                var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                var testThreadContext1 = this.ResolveFromCustomContainer<TestThreadContext>(testThreadKernel);
+                var testThreadContext2 = this.ResolveFromCustomContainer<TestThreadContext>(testThreadKernel);
 
                 // Assert
                 testThreadContext2.Should().BeSameAs(testThreadContext1);
@@ -45,10 +47,10 @@
                 {
                     using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
                     {
-                        var scenarioKernel = scenarioContainer.Resolve<IKernel>();
+                        var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
 
                         // Act
-                        Action act = () => scenarioKernel.Get<TestThreadContext>();
+                        Action act = () => this.ResolveFromCustomContainer<TestThreadContext>(scenarioKernel);
 
                         // Assert
                         act.Should().NotThrow();
@@ -65,10 +67,10 @@
             {
                 using (var featureContainer = this.CreateFeatureContainer(testThreadContainer))
                 {
-                    var featureKernel = featureContainer.Resolve<IKernel>();
+                    var featureKernel = featureContainer.Resolve<TContainerType>();
 
                     // Act
-                    Action act = () => featureKernel.Get<TestThreadContext>();
+                    Action act = () => this.ResolveFromCustomContainer<TestThreadContext>(featureKernel);
 
                     // Assert
                     act.Should().NotThrow();
@@ -82,10 +84,10 @@
             // Arrange
             using (var testThreadContainer = this.CreateTestThreadContainer(this.GlobalContainer))
             {
-                var testThreadKernel = testThreadContainer.Resolve<IKernel>();
+                var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
 
                 // Act
-                Action act = () => testThreadKernel.Get<TestThreadContext>();
+                Action act = () => this.ResolveFromCustomContainer<TestThreadContext>(testThreadKernel);
 
                 // Assert
                 act.Should().NotThrow();
@@ -104,12 +106,12 @@
                     using (var scenarioContainer = this.CreateScenarioContainer(featureContainer))
                     {
                         // Act
-                        var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                        var featureKernel = featureContainer.Resolve<IKernel>();
-                        var scenarioKernel = scenarioContainer.Resolve<IKernel>();
-                        var testThreadContextFromTestThreadKernel = testThreadKernel.Get<TestThreadContext>();
-                        var testThreadContextFromFeatureKernel = featureKernel.Get<TestThreadContext>();
-                        var testThreadContextFromScenarioKernel = scenarioKernel.Get<TestThreadContext>();
+                        var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                        var featureKernel = featureContainer.Resolve<TContainerType>();
+                        var scenarioKernel = scenarioContainer.Resolve<TContainerType>();
+                        var testThreadContextFromTestThreadKernel = this.ResolveFromCustomContainer<TestThreadContext>(testThreadKernel);
+                        var testThreadContextFromFeatureKernel = this.ResolveFromCustomContainer<TestThreadContext>(featureKernel);
+                        var testThreadContextFromScenarioKernel = this.ResolveFromCustomContainer<TestThreadContext>(scenarioKernel);
 
                         // Assert
                         testThreadContextFromTestThreadKernel.Should().BeSameAs(testThreadContextFromScenarioKernel);
@@ -132,12 +134,12 @@
                         using (var scenarioContainer2 = this.CreateScenarioContainer(featureContainer))
                         {
                             // Act
-                            var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                            var testThreadContextFromTestThreadKernel = testThreadKernel.Get<TestThreadContext>();
-                            var scenarioKernel1 = scenarioContainer1.Resolve<IKernel>();
-                            var testThreadContextFromScenarioKernel1 = scenarioKernel1.Get<TestThreadContext>();
-                            var scenarioKernel2 = scenarioContainer2.Resolve<IKernel>();
-                            var testThreadContextFromScenarioKernel2 = scenarioKernel2.Get<TestThreadContext>();
+                            var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                            var testThreadContextFromTestThreadKernel = this.ResolveFromCustomContainer<TestThreadContext>(testThreadKernel);
+                            var scenarioKernel1 = scenarioContainer1.Resolve<TContainerType>();
+                            var testThreadContextFromScenarioKernel1 = this.ResolveFromCustomContainer<TestThreadContext>(scenarioKernel1);
+                            var scenarioKernel2 = scenarioContainer2.Resolve<TContainerType>();
+                            var testThreadContextFromScenarioKernel2 = this.ResolveFromCustomContainer<TestThreadContext>(scenarioKernel2);
 
                             // Assert
                             testThreadContextFromTestThreadKernel.Should()
@@ -161,12 +163,12 @@
                     using (var featureContainer2 = this.CreateFeatureContainer(testThreadContainer))
                     {
                         // Act
-                        var testThreadKernel = testThreadContainer.Resolve<IKernel>();
-                        var testThreadContextFromTestThreadKernel = testThreadKernel.Get<TestThreadContext>();
-                        var featureKernel1 = featureContainer1.Resolve<IKernel>();
-                        var testThreadContextFromFeatureKernel1 = featureKernel1.Get<TestThreadContext>();
-                        var featureKernel2 = featureContainer2.Resolve<IKernel>();
-                        var testThreadContextFromFeatureKernel2 = featureKernel2.Get<TestThreadContext>();
+                        var testThreadKernel = testThreadContainer.Resolve<TContainerType>();
+                        var testThreadContextFromTestThreadKernel = this.ResolveFromCustomContainer<TestThreadContext>(testThreadKernel);
+                        var featureKernel1 = featureContainer1.Resolve<TContainerType>();
+                        var testThreadContextFromFeatureKernel1 = this.ResolveFromCustomContainer<TestThreadContext>(featureKernel1);
+                        var featureKernel2 = featureContainer2.Resolve<TContainerType>();
+                        var testThreadContextFromFeatureKernel2 = this.ResolveFromCustomContainer<TestThreadContext>(featureKernel2);
 
                         // Assert
                         testThreadContextFromTestThreadKernel.Should().BeSameAs(testThreadContextFromFeatureKernel1);

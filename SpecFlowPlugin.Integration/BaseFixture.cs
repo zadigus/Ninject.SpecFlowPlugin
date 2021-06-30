@@ -1,4 +1,4 @@
-﻿namespace Ninject.SpecFlowPlugin.Integration
+﻿namespace SpecFlowPlugin.Integration
 {
     using System;
     using System.Collections.Generic;
@@ -21,11 +21,39 @@
     using TechTalk.SpecFlow.Plugins;
     using TechTalk.SpecFlow.UnitTestProvider;
 
-    public class BaseFixture
+    public class BaseFixture<TContainerType>
+        where TContainerType : class
     {
+        private readonly Func<object, Type, object> resolver;
+
+        private readonly Action<object, Type, Type> register;
+
         private readonly SpecFlowConfiguration specFlowConfiguration = ConfigurationLoader.GetDefault();
 
         private IBindingRegistry bindingRegistry;
+
+        public BaseFixture()
+        {
+            this.resolver = this.Resolvers[typeof(TContainerType)];
+            this.register = this.Registers[typeof(TContainerType)];
+        }
+
+        // TODO: this is not OCP-compliant
+        protected Dictionary<Type, Func<object, Type, object>> Resolvers { get; } =
+            new Dictionary<Type, Func<object, Type, object>>
+            {
+                { typeof(IKernel), (container, serviceType) => (container as IKernel).Get(serviceType) }
+            };
+
+        protected Dictionary<Type, Action<object, Type, Type>> Registers { get; } =
+            new Dictionary<Type, Action<object, Type, Type>>
+            {
+                {
+                    typeof(IKernel),
+                    (container, serviceType, serviceInterfaceType) =>
+                        (container as IKernel).Bind(serviceInterfaceType).To(serviceType)
+                }
+            };
 
         protected ObjectContainer GlobalContainer { get; private set; }
 
@@ -48,19 +76,22 @@
 
         protected void AssociateRuntimeEventsWithPlugin<TScenarioContainerFinder, TFeatureContainerFinder,
             TTestThreadContainerFinder>(RuntimePluginEvents events)
-            where TScenarioContainerFinder : ContainerSetupFinder<ScenarioDependenciesAttribute, IKernel>
-            where TFeatureContainerFinder : ContainerSetupFinder<FeatureDependenciesAttribute, IKernel>
-            where TTestThreadContainerFinder : ContainerSetupFinder<TestThreadDependenciesAttribute, IKernel>
+            where TScenarioContainerFinder : ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>
+            where TFeatureContainerFinder : ContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>
+            where TTestThreadContainerFinder : ContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>
         {
             var plugin = new NinjectPlugin();
 
             this.GlobalContainer.RegisterTypeAs<NinjectTestObjectResolver, ITestObjectResolver>();
             this.GlobalContainer
-                .RegisterTypeAs<TScenarioContainerFinder, ContainerSetupFinder<ScenarioDependenciesAttribute, IKernel>>();
+                .RegisterTypeAs<TScenarioContainerFinder,
+                    ContainerSetupFinder<ScenarioDependenciesAttribute, TContainerType>>();
             this.GlobalContainer
-                .RegisterTypeAs<TFeatureContainerFinder, ContainerSetupFinder<FeatureDependenciesAttribute, IKernel>>();
+                .RegisterTypeAs<TFeatureContainerFinder,
+                    ContainerSetupFinder<FeatureDependenciesAttribute, TContainerType>>();
             this.GlobalContainer
-                .RegisterTypeAs<TTestThreadContainerFinder, ContainerSetupFinder<TestThreadDependenciesAttribute, IKernel>>();
+                .RegisterTypeAs<TTestThreadContainerFinder,
+                    ContainerSetupFinder<TestThreadDependenciesAttribute, TContainerType>>();
 
             plugin.Initialize(events, Mock.Of<RuntimePluginParameters>(), Mock.Of<UnitTestProviderConfiguration>());
             events.RaiseCustomizeGlobalDependencies(this.GlobalContainer, this.specFlowConfiguration);
@@ -110,6 +141,19 @@
             hookBinding.SetupGet(binding => binding.Method).Returns(bindingMethod);
             bindingRegistryMock.Setup(registry => registry.GetHooks())
                 .Returns(new List<IHookBinding> { hookBinding.Object });
+        }
+
+        protected TService ResolveFromCustomContainer<TService>(TContainerType container)
+            where TService : class
+        {
+            return this.resolver(container, typeof(TService)) as TService;
+        }
+
+        protected void RegisterTransientInCustomContainer<TService, TInterface>(TContainerType container)
+            where TService : class
+            where TInterface : class
+        {
+            this.register(container, typeof(TService), typeof(TInterface));
         }
     }
 }
