@@ -26,7 +26,7 @@
     {
         private readonly Func<object, Type, object> resolver;
 
-        private readonly Action<object, Type, Type> register;
+        private readonly Action<object, Type, Type> binder;
 
         private readonly SpecFlowConfiguration specFlowConfiguration = ConfigurationLoader.GetDefault();
 
@@ -35,7 +35,7 @@
         public BaseFixture()
         {
             this.resolver = this.Resolvers[typeof(TContainerType)];
-            this.register = this.Registers[typeof(TContainerType)];
+            this.binder = this.Binders[typeof(TContainerType)];
         }
 
         // TODO: this is not OCP-compliant
@@ -45,7 +45,7 @@
                 { typeof(IKernel), (container, serviceType) => (container as IKernel).Get(serviceType) }
             };
 
-        protected Dictionary<Type, Action<object, Type, Type>> Registers { get; } =
+        protected Dictionary<Type, Action<object, Type, Type>> Binders { get; } =
             new Dictionary<Type, Action<object, Type, Type>>
             {
                 {
@@ -153,7 +153,7 @@
             where TService : class
             where TInterface : class
         {
-            this.register(container, typeof(TService), typeof(TInterface));
+            this.binder(container, typeof(TService), typeof(TInterface));
         }
     }
 }
