@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		AssemblyInfoGlobal.cs = AssemblyInfoGlobal.cs
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpecFlowPlugin.Test", "SpecFlowPlugin.Test\SpecFlowPlugin.Test.csproj", "{3FF994B3-4432-439F-9496-040EB4ABCCCC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestAssemblies", "TestAssemblies", "{F18BD5C6-327D-49CE-AA76-64B913F26830}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WrongAmountInputArgsFeatureDependencies", "TestData\WrongAmountInputArgsFeatureDependencies\WrongAmountInputArgsFeatureDependencies.csproj", "{C26519C0-4ABD-4415-95FC-928EE44037E6}"
@@ -55,14 +53,6 @@ Global
 		{61195A78-D809-4F06-B58A-265F9EE272BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61195A78-D809-4F06-B58A-265F9EE272BA}.ReleaseBodi|Any CPU.ActiveCfg = ReleaseBodi|Any CPU
 		{61195A78-D809-4F06-B58A-265F9EE272BA}.ReleaseBodi|Any CPU.Build.0 = ReleaseBodi|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.DebugBodi|Any CPU.ActiveCfg = DebugBodi|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.DebugBodi|Any CPU.Build.0 = DebugBodi|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.ReleaseBodi|Any CPU.ActiveCfg = ReleaseBodi|Any CPU
-		{3FF994B3-4432-439F-9496-040EB4ABCCCC}.ReleaseBodi|Any CPU.Build.0 = ReleaseBodi|Any CPU
 		{C26519C0-4ABD-4415-95FC-928EE44037E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C26519C0-4ABD-4415-95FC-928EE44037E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26519C0-4ABD-4415-95FC-928EE44037E6}.DebugBodi|Any CPU.ActiveCfg = DebugBodi|Any CPU
